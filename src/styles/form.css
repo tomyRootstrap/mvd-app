@@ -9,12 +9,14 @@
 
 .form form {
   background-color: var(--color-white);
-  border-radius: 5px;
-  box-shadow: var(--box-shadow);
+  border-radius: 5px;  
   max-width: 20rem;
   padding: 2.5rem 3rem;
   width: 100%;
 }
+.shadow{
+  box-shadow: var(--box-shadow);
+}  
 
 .form label {
   font-size: var(--font-size);
