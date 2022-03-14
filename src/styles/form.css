@@ -28,17 +28,6 @@
   align-items: center;
 }
 
-.form a {
-  color: var(--color-light-blue);
-  font-size: var(--font-size);
-  margin-top: 0.8rem;
-  text-decoration: none;
-}
-
-.form a:hover {
-  text-decoration: underline;
-}
-
 .form .error-message {
   color: var(--color-red);
   display: block;

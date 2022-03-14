@@ -58,13 +58,9 @@ const Login = () => {
       <div className="form column left-column">
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="circles"> </div>
-          <h1>{t('login.title')}</h1>
-          <h1>TARGET MVD</h1>
-          <h5>Find people near you & Connect</h5>
-          <p className="explanation">
-            Create a target wherever on the map, specify your interest: Travel, Dating, Music, etc
-            and start conecting with others who share your interest.
-          </p>
+          <h1 className="title">{t('login.title')}</h1>
+          <h5 className="subTitle">{t('login.subTitle')}</h5>
+          <p className="explanation">{t('login.explanation')}</p>
           <label htmlFor="email">{t('login.labels.email')}</label>
           <Input
             register={register}
@@ -87,9 +83,18 @@ const Login = () => {
 
           <div className="button-container">
             <Button type="submit" disabled={isLoading}>
-              {t('login.title')}
+              {t('login.button.signin')}
             </Button>
-            <Link to={routesPaths.signup}>{t('login.dontHaveAccountMsg')}</Link>
+            <Link to={routesPaths.signup} className="forgot">
+              {t('login.forgot')}
+            </Link>
+            <Link to={routesPaths.signup} className="facebook">
+              {t('login.faceBook')}
+            </Link>
+            <hr />
+            <Link to={routesPaths.signup} className="signup">
+              {t('login.dontHaveAccountMsg')}
+            </Link>
           </div>
         </form>
       </div>
