@@ -48,7 +48,7 @@ const Signup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
-  const [isSend, setIsSend] = useState(false);
+  const [isSend, setIsSend] = useState(true);
 
   const [toSend, setToSend] = useState({
     to_name: '',
@@ -70,7 +70,6 @@ const Signup = () => {
 
   const onSubmit = data => {
     sendEmailValidation(data);
-    return false;
     signup(data);
   };
 
