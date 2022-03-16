@@ -3,7 +3,7 @@ import cn from 'classnames';
 import './style.css';
 
 const ComboBox = ({ register, name, dataSource, error, handleFocus }) => (
-  <div className="ComboBox">
+  <div className="comboBox">
     <select {...register(name)} className={cn({ error })} onFocus={handleFocus}>
       {dataSource.map((data, index) => {
         return (
