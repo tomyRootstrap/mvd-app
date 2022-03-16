@@ -17,6 +17,7 @@ const supportedUserLocale = SUPPORTED_LANGUAGES.includes(usersLocale);
 const locale = supportedUserLocale ? usersLocale : DEFAULT_LANGUAGE;
 const messages = locales[locale];
 
+// wait for facebook sdk before startup
 ReactDOM.render(
   <React.StrictMode>
     <IntlProvider messages={flatten(messages)} locale={locale} defaultLocale={DEFAULT_LANGUAGE}>

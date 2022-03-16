@@ -14,7 +14,7 @@ import routesPaths from 'routes/routesPaths';
 import Input from 'components/form/Input';
 import Button from 'components/common/Button';
 
-import '../../styles/form.css';
+import './style.css';
 
 const Login = () => {
   const t = useTranslation();
@@ -53,36 +53,58 @@ const Login = () => {
   }
 
   return (
-    <div className="form">
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <h1>{t('login.title')}</h1>
-        <label htmlFor="email">{t('login.labels.email')}</label>
-        <Input
-          register={register}
-          type="email"
-          name="email"
-          error={errors.email}
-          handleFocus={handleFocus}
-        />
+    <div className="row">
+      <div className="form column left-column">
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <div className="circles"> </div>
+          <h1 className="title">{t('login.title')}</h1>
+          <h5 className="subTitle">{t('login.subTitle')}</h5>
+          <p className="explanation">{t('login.explanation')}</p>
+          <label htmlFor="email">{t('login.labels.email')}</label>
+          <Input
+            register={register}
+            type="email"
+            name="email"
+            error={errors.email}
+            handleFocus={handleFocus}
+          />
 
-        <label htmlFor="password">{t('login.labels.password')}</label>
-        <Input
-          register={register}
-          type="password"
-          name="password"
-          error={errors.password}
-          handleFocus={handleFocus}
-        />
+          <label htmlFor="password">{t('login.labels.password')}</label>
+          <Input
+            register={register}
+            type="password"
+            name="password"
+            error={errors.password}
+            handleFocus={handleFocus}
+          />
 
-        {error && error.data && <p className="error-message">{error.data.errors}</p>}
+          {error && error.data && <p className="error-message">{error.data.errors}</p>}
 
-        <div className="button-container">
-          <Button type="submit" disabled={isLoading}>
-            {t('login.title')}
-          </Button>
-          <Link to={routesPaths.signup}>{t('login.dontHaveAccountMsg')}</Link>
+          <div className="button-container">
+            <Button type="submit" disabled={isLoading}>
+              {t('login.button.signin')}
+            </Button>
+            <Link to={routesPaths.signup} className="forgot">
+              {t('login.forgot')}
+            </Link>
+            <Link to={routesPaths.signup} className="facebook">
+              {t('login.faceBook')}
+            </Link>
+            <hr />
+            <Link to={routesPaths.signup} className="signup">
+              {t('login.dontHaveAccountMsg')}
+            </Link>
+          </div>
+        </form>
+      </div>
+      <div className="column right-column">
+        <div className="i6"></div>
+        <button id="apple-store"></button>
+        <div className="social-media">
+          <button id="facebook"></button>
+          <button id="twitter"></button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

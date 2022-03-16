@@ -22,8 +22,12 @@
     }
   },
   "login": {
-    "title": "Log in",
-    "dontHaveAccountMsg": "Don't have an account? Sign up",
+    "title": "TARGET MVD",
+    "subTitle":"Find people near you & Connect",
+    "explanation":"Create a target wherever on the map, specify your interest: Travel, Dating, Music, etc and start conecting with others who share your interest.",
+    "dontHaveAccountMsg": "Sign up",
+    "forgot": "Forgot your password?",
+    "faceBook":"Connect with facebook",
     "labels": {
       "email": "Email",
       "password": "Password"
@@ -31,6 +35,9 @@
     "errors": {
       "emailMsg": "Must provide an email",
       "passwordMsg": "Must provide a password"
+    },
+    "button":{
+      "signin": "Sign in"
     }
   }
 }
