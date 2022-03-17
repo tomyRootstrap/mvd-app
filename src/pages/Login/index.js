@@ -14,6 +14,7 @@ import routesPaths from 'routes/routesPaths';
 import Input from 'components/form/Input';
 import Button from 'components/common/Button';
 
+import '../../styles/form.css';
 import './style.css';
 
 const Login = () => {
@@ -97,6 +98,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+
       <div className="column right-column">
         <div className="i6"></div>
         <button id="apple-store"></button>
