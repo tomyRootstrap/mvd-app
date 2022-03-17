@@ -57,15 +57,13 @@ const Signup = () => {
   });
 
   const sendEmailValidation = data => {
-    setToSend((toSend.to_name = data.username), (toSend.to = data.email));
-    emailjs
-      .send('service_c2myo6u', 'template_zdq8t9e', toSend, 'CzOOH1L12ZmTTkiFU')
-      .then(response => {
-        setIsSend(false);
-      })
-      .catch(err => {
-        console.log('FAILED...', err);
-      });
+    setToSend(prevState => {
+      return {
+        ...prevState,
+        to_name: data.username,
+        to: data.email,
+      };
+    });
   };
 
   const onSubmit = data => {
@@ -77,13 +75,21 @@ const Signup = () => {
 
   const handleFocus = () => error && resetErrors();
 
-  useEffect(() => {
-    if (isSuccess) {
-      push(routesPaths.index);
-    }
-  }, [isSuccess, user, push]);
+  useEffect(() => {}, [isSuccess, user, push]);
 
   useEffect(() => resetErrors, [resetErrors]);
+  useEffect(() => {
+    if (!isSend) {
+      emailjs
+        .send('service_c2myo6u', 'template_zdq8t9e', toSend, 'CzOOH1L12ZmTTkiFU')
+        .then(response => {
+          setIsSend(false);
+        })
+        .catch(err => {
+          console.log('FAILED...', err);
+        });
+    }
+  }, [toSend, isSend]);
 
   return (
     <div className="row">
