@@ -114,6 +114,15 @@
 }
 
 hr {
-  margin: 1rem;
+  margin: 0.5rem 1rem 1rem 1rem;
   width: 7.5rem;
+}
+
+.kep-login-facebook {
+  background-color: var(--color-white) !important;
+  border: none !important;
+  color: var(--color-black) !important;
+  font-weight: 900 !important;
+  font-size: 15px !important;
+  padding: 15px 0px 0px 0px !important;
 }
