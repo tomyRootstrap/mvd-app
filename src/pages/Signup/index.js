@@ -69,7 +69,6 @@ const Signup = () => {
   const onSubmit = data => {
     sendEmailValidation(data);
     signup(data);
-    return false;
   };
 
   const resetErrors = useCallback(() => dispatch(api.util.resetApiState()), [dispatch]);
@@ -85,6 +84,7 @@ const Signup = () => {
         .catch(err => {});
     }
   };
+  useEffect(() => resetErrors(), [resetErrors]);
   useEffect(() => {
     emailSendVerification();
   }, [toSend, isSend]);
