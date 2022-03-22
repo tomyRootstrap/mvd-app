@@ -1,8 +1,7 @@
 import Button from 'components/common/Button';
 import useTranslation from 'hooks/useTranslation';
 import { useLogoutMutation } from 'services/auth/auth';
-
-import logo from 'assets/logo.svg';
+import MapView from 'components/map/map';
 
 import './styles.css';
 
@@ -14,7 +13,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <img src={logo} className="home__logo" alt={t('home.logoAltMsg')} />
+      <MapView />
       <h1>{t('home.welcomeMsg')}</h1>
       <div className="home__logout">
         <Button handleClick={handleLogout} disabled={isLoading}>
