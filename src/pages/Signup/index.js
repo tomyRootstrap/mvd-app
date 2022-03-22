@@ -48,7 +48,7 @@ const Signup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
-  const [isSend, setIsSend] = useState(true);
+  const [isSend, setIsSend] = useState(false);
 
   const [toSend, setToSend] = useState({
     to_name: '',
@@ -69,31 +69,29 @@ const Signup = () => {
   const onSubmit = data => {
     sendEmailValidation(data);
     signup(data);
+    return false;
   };
 
   const resetErrors = useCallback(() => dispatch(api.util.resetApiState()), [dispatch]);
 
   const handleFocus = () => error && resetErrors();
-
-  useEffect(() => {}, [isSuccess, user, push]);
-
-  useEffect(() => resetErrors, [resetErrors]);
-  useEffect(() => {
+  const emailSendVerification = () => {
     if (!isSend) {
       emailjs
         .send('service_c2myo6u', 'template_zdq8t9e', toSend, 'CzOOH1L12ZmTTkiFU')
         .then(response => {
           setIsSend(false);
         })
-        .catch(err => {
-          console.log('FAILED...', err);
-        });
+        .catch(err => {});
     }
+  };
+  useEffect(() => {
+    emailSendVerification();
   }, [toSend, isSend]);
 
   return (
     <div className="row">
-      {isSend === true ? (
+      {!isSend ? (
         <div className="form column left-column">
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <h1>{t('signup.title')}</h1>
