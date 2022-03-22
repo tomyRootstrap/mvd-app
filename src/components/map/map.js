@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import './index.css';
 const MapView = () => {
   return (
     <MapContainer center={{ lat: 51.505, lng: -0.09 }} zoom={13}>
