@@ -1,7 +1,7 @@
 import Button from 'components/common/Button';
 import useTranslation from 'hooks/useTranslation';
 import { useLogoutMutation } from 'services/auth/auth';
-import MapView from 'components/Map/index';
+import MapView from 'components/Map';
 
 import './styles.css';
 
