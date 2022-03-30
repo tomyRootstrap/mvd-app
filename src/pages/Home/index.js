@@ -8,9 +8,7 @@ import './styles.css';
 const Home = () => {
   const t = useTranslation();
   const [logout, { isLoading }] = useLogoutMutation();
-
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
-
   return (
     <div className="home">
       <MapView />
