@@ -8,15 +8,11 @@ import ComboBox from 'components/form/ComboBox';
 import { useEffect, useState } from 'react';
 import myIcon from './Icon';
 import { useCreateTargetMutation } from 'services/target/target';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 const MapView = () => {
-  const [createTarget, { isLoading, isSuccess, error }] = useCreateTargetMutation();
-  const t = useTranslation();
-  const topics = [
-    { value: 'topic1', name: 'topic1' },
-    { value: 'topic2', name: 'topic2' },
-  ];
-  const create = () => {};
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
     where: [],
@@ -49,6 +45,25 @@ const MapView = () => {
     return geolocationEnabled();
   }, []);
 
+  const [createTarget, { isLoading, isSuccess, error }] = useCreateTargetMutation();
+  const t = useTranslation();
+  const topics = [
+    { value: 'topic1', name: 'topic1' },
+    { value: 'topic2', name: 'topic2' },
+  ];
+
+  const schema = z.object({
+    area: z.string().min(1),
+    markTitle: z.string().min(1),
+    topic: z.string().min(1),
+  });
+
+  const {
+    create,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) });
+
   return (
     <>
       {currentPosition.where?.length === 2 ? (
@@ -61,13 +76,13 @@ const MapView = () => {
         </MapContainer>
       ) : null}
       <div>
-        <form onSubmit={create}>
+        <form onSubmit={handleSubmit(createTarget)}>
           <label htmlFor="area">{t('home.create.area')}</label>
-          <Input register={createTarget} type="text" name="area" />
+          <Input register={create} type="text" name="area" />
           <label htmlFor="markTitle">{t('home.create.markTitle')}</label>
-          <Input register={createTarget} type="text" name="markTitle" />
+          <Input register={create} type="text" name="markTitle" />
           <label htmlFor="topic">{t('home.create.topic')}</label>
-          <ComboBox register={createTarget} name="topic" dataSource={topics} />
+          <ComboBox register={create} name="topic" dataSource={topics} />
         </form>
       </div>
     </>
