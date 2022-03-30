@@ -7,8 +7,10 @@ import { useLoginMutation } from 'services/auth/auth';
 import ComboBox from 'components/form/ComboBox';
 import { useEffect, useState } from 'react';
 import myIcon from './Icon';
+import { useCreateTargetMutation } from 'services/target/target';
 
 const MapView = () => {
+  const [createTarget, { isLoading, isSuccess, error }] = useCreateTargetMutation();
   const t = useTranslation();
   const topics = [
     { value: 'topic1', name: 'topic1' },
@@ -59,13 +61,13 @@ const MapView = () => {
         </MapContainer>
       ) : null}
       <div>
-        <form onSubmit={create()}>
+        <form onSubmit={create}>
           <label htmlFor="area">{t('home.create.area')}</label>
-          <Input register={createMark} type="text" name="area" />
+          <Input register={createTarget} type="text" name="area" />
           <label htmlFor="markTitle">{t('home.create.markTitle')}</label>
-          <Input register={createMark} type="text" name="markTitle" />
+          <Input register={createTarget} type="text" name="markTitle" />
           <label htmlFor="topic">{t('home.create.topic')}</label>
-          <ComboBox register={createMark} name="topic" dataSource={topics} />
+          <ComboBox register={createTarget} name="topic" dataSource={topics} />
         </form>
       </div>
     </>
