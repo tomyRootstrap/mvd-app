@@ -69,7 +69,7 @@ const MapView = () => {
         </form>
       </div>
     </>
-  ); 
+  );
 };
 
 export default MapView;
