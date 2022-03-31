@@ -1,16 +1,8 @@
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './style.css';
-import Input from 'components/form/Input';
-import useTranslation from 'hooks/useTranslation';
-import { useLoginMutation } from 'services/auth/auth';
-import ComboBox from 'components/form/ComboBox';
 import { useEffect, useState } from 'react';
 import myIcon from './Icon';
-import { useCreateTargetMutation } from 'services/target/target';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 
 const MapView = () => {
   const [currentPosition, setCurrentPosition] = useState({
@@ -45,25 +37,6 @@ const MapView = () => {
     return geolocationEnabled();
   }, []);
 
-  const [createTarget, { isLoading, isSuccess, error }] = useCreateTargetMutation();
-  const t = useTranslation();
-  const topics = [
-    { value: 'topic1', name: 'topic1' },
-    { value: 'topic2', name: 'topic2' },
-  ];
-
-  const schema = z.object({
-    area: z.string().min(1),
-    targetTitle: z.string().min(1),
-    topic: z.string().min(1),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(schema) });
-
   return (
     <>
       {currentPosition.where?.length === 2 ? (
@@ -75,16 +48,6 @@ const MapView = () => {
           <Marker position={currentPosition.where} icon={myIcon} />
         </MapContainer>
       ) : null}
-      <div>
-        <form onSubmit={handleSubmit(createTarget())}>
-          <label htmlFor="area">{t('home.create.area')}</label>
-          <Input register={register} type="text" name="area" />
-          <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
-          <Input register={register} type="text" name="targetTitle" />
-          <label htmlFor="topic">{t('home.create.topic')}</label>
-          <ComboBox register={register} name="topic" dataSource={topics} />
-        </form>
-      </div>
     </>
   );
 };
