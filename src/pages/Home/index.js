@@ -10,16 +10,26 @@ import Input from 'components/form/Input';
 import ComboBox from 'components/form/ComboBox';
 
 import './styles.css';
+import { useEffect, useState } from 'react';
+import { useTopicsMutation } from 'services/topic/topic';
 
 const Home = () => {
   const t = useTranslation();
   const [logout, { isLoading }] = useLogoutMutation();
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
   const [createTarget, { isLoadingCreateTarget, isSuccess, error }] = useCreateTargetMutation();
-  const topics = [
-    { value: 'topic1', name: 'topic1' },
-    { value: 'topic2', name: 'topic2' },
-  ];
+  const [getTopics, { isTopicsLoading }] = useTopicsMutation();
+  const [topics, setTopics] = useState([]);
+
+  useEffect(() => {
+    getTopics().then(data => {
+      let topicsPipe = [];
+      data.data.topics.map(topic => {
+        topicsPipe.push(topic.topic);
+      });
+      setTopics(topicsPipe);
+    });
+  }, []);
 
   const schema = z.object({
     area: z.string().min(1),
@@ -38,16 +48,19 @@ const Home = () => {
   return (
     <div className="home">
       <MapView />
-      <div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="area">{t('home.create.area')}</label>
-          <Input register={register} type="text" name="area" />
-          <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
-          <Input register={register} type="text" name="targetTitle" />
-          <label htmlFor="topic">{t('home.create.topic')}</label>
-          <ComboBox register={register} name="topic" dataSource={topics} />
-        </form>
-      </div>
+      {topics.length > 0 ? (
+        <div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="area">{t('home.create.area')}</label>
+            <Input register={register} type="text" name="area" />
+            <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
+            <Input register={register} type="text" name="targetTitle" />
+            <label htmlFor="topic">{t('home.create.topic')}</label>
+            <ComboBox register={register} name="topic" dataSource={topics} />
+          </form>
+        </div>
+      ) : null}
+
       <h1>{t('home.welcomeMsg')}</h1>
       <div className="home__logout">
         <Button handleClick={handleLogout} disabled={isLoading}>

@@ -7,8 +7,8 @@ const ComboBox = ({ register, name, dataSource, error, handleFocus }) => (
     <select {...register(name)} className={cn({ error })} onFocus={handleFocus}>
       {dataSource.map((data, index) => {
         return (
-          <option key={index} value={data.value}>
-            {data.name}
+          <option key={index} value={data.id}>
+            {data.label}
           </option>
         );
       })}
