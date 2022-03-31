@@ -54,12 +54,12 @@ const MapView = () => {
 
   const schema = z.object({
     area: z.string().min(1),
-    markTitle: z.string().min(1),
+    targetTitle: z.string().min(1),
     topic: z.string().min(1),
   });
 
   const {
-    create,
+    register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
@@ -76,13 +76,13 @@ const MapView = () => {
         </MapContainer>
       ) : null}
       <div>
-        <form onSubmit={handleSubmit(createTarget)}>
+        <form onSubmit={handleSubmit(createTarget())}>
           <label htmlFor="area">{t('home.create.area')}</label>
-          <Input register={create} type="text" name="area" />
-          <label htmlFor="markTitle">{t('home.create.markTitle')}</label>
-          <Input register={create} type="text" name="markTitle" />
+          <Input register={register} type="text" name="area" />
+          <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
+          <Input register={register} type="text" name="targetTitle" />
           <label htmlFor="topic">{t('home.create.topic')}</label>
-          <ComboBox register={create} name="topic" dataSource={topics} />
+          <ComboBox register={register} name="topic" dataSource={topics} />
         </form>
       </div>
     </>

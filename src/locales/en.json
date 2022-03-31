@@ -5,7 +5,12 @@
   "home": {
     "welcomeMsg": "Welcome to React Redux Base",
     "logoAltMsg": "React logo",
-    "logoutBtn": "Logout"
+    "logoutBtn": "Logout",
+    "create": {
+      "area" : "Specify area length",
+      "targetTitle" : "Target title",
+      "topic" : "Select a topic"
+    }
   },
   "signup": {
     "title": "Sign up",
