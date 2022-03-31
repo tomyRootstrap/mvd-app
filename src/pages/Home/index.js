@@ -12,6 +12,7 @@ import ComboBox from 'components/form/ComboBox';
 import './styles.css';
 import { useEffect, useState } from 'react';
 import { useTopicsMutation } from 'services/topic/topic';
+import SideBar from 'components/side-bar';
 
 const Home = () => {
   const t = useTranslation();
@@ -60,7 +61,9 @@ const Home = () => {
           </form>
         </div>
       ) : null}
-
+      <SideBar title={'Hola'}>
+        <p>Aquí debería renderizarse cierto código</p>
+      </SideBar>
       <h1>{t('home.welcomeMsg')}</h1>
       <div className="home__logout">
         <Button handleClick={handleLogout} disabled={isLoading}>
