@@ -49,20 +49,19 @@ const Home = () => {
   return (
     <div className="home">
       <MapView />
-      {topics.length > 0 ? (
-        <div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="area">{t('home.create.area')}</label>
-            <Input register={register} type="text" name="area" />
-            <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
-            <Input register={register} type="text" name="targetTitle" />
-            <label htmlFor="topic">{t('home.create.topic')}</label>
-            <ComboBox register={register} name="topic" dataSource={topics} />
-          </form>
-        </div>
-      ) : null}
       <SideBar title={'Hola'}>
-        <p>Aquí debería renderizarse cierto código</p>
+        {topics.length > 0 ? (
+          <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <label htmlFor="area">{t('home.create.area')}</label>
+              <Input register={register} type="text" name="area" />
+              <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
+              <Input register={register} type="text" name="targetTitle" />
+              <label htmlFor="topic">{t('home.create.topic')}</label>
+              <ComboBox register={register} name="topic" dataSource={topics} />
+            </form>
+          </div>
+        ) : null}
       </SideBar>
       <h1>{t('home.welcomeMsg')}</h1>
       <div className="home__logout">
