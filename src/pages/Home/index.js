@@ -10,9 +10,11 @@ import Input from 'components/form/Input';
 import ComboBox from 'components/form/ComboBox';
 
 import './styles.css';
+import '../../components/side-bar/style.css';
 import { useEffect, useState } from 'react';
 import { useTopicsMutation } from 'services/topic/topic';
 import SideBar from 'components/side-bar';
+import sideBarIcon from '../../assets/aim.png';
 
 const Home = () => {
   const t = useTranslation();
@@ -49,16 +51,21 @@ const Home = () => {
   return (
     <div className="home">
       <MapView />
-      <SideBar title={'Hola'}>
+      <SideBar title={'CREATE TARGET '}>
+        <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
+        <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
         {topics.length > 0 ? (
           <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)}>
               <label htmlFor="area">{t('home.create.area')}</label>
               <Input register={register} type="text" name="area" />
               <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
               <Input register={register} type="text" name="targetTitle" />
               <label htmlFor="topic">{t('home.create.topic')}</label>
               <ComboBox register={register} name="topic" dataSource={topics} />
+              <button type="submit" className="button">
+                {t('home.create.saveTarget')}
+              </button>
             </form>
           </div>
         ) : null}

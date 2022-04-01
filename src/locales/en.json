@@ -9,7 +9,8 @@
     "create": {
       "area" : "Specify area length",
       "targetTitle" : "Target title",
-      "topic" : "Select a topic"
+      "topic" : "Select a topic",
+      "saveTarget" : "Save target"
     }
   },
   "signup": {

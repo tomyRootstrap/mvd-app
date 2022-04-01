@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import logo from '../../assets/smilies.png';
+
 import './style.css';
 
 const SideBar = props => {
   return (
     <div className="side-bar">
-      <h1>{props.title}</h1>
+      <div className="side-bar-header">
+        <h1 className="side-bar-header-title">{props.title}</h1>
+      </div>
+
       {props.children}
-      <img src={logo} alt=""></img>
+      <img className="smiles" src={logo} alt=""></img>
     </div>
   );
 };

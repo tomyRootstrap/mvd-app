@@ -6,3 +6,57 @@
   left: 0px;
   top: 0px;
 }
+.smiles{
+  width: 48px;
+  height: 28px;
+}
+
+.side-bar-header{
+  width: 100%;
+  margin-top: 0rem;
+  background-color: #2FBCF7;  
+  color: var(--color-white);
+  padding: 0.5rem 0rem 0.5rem 0rem;
+}
+
+.side-bar-header-title{
+  font-size: 20px;
+  line-height: 23px;
+  letter-spacing: 3px;  
+}
+
+.side-bar-header-sub-title{
+  font-size: 15px;
+  line-height: 13px;
+  text-align: center;
+  letter-spacing: 1.65px;
+}
+
+.side-bar-header-title-icon{
+  padding: 1rem 1rem 0rem 1rem;
+}
+
+.side-bar-form{
+  padding: 2rem 2.5rem 0rem 2.5rem;
+}
+
+.button {
+  background-color: var(--color-black);
+  border: none;  
+  color: var(--color-white);
+  font-size: var(--font-size-button);
+  font-weight: bold;
+  margin: 0.3rem 0;
+  padding: 0.8rem;
+  width: 50%;
+}
+
+.button:hover {
+  background-color: var(--color-light-black);
+  cursor: pointer;
+}
+
+.button:disabled {
+  background-color: var(--color-light-grey);
+  cursor: unset;
+}
