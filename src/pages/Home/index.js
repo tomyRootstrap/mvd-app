@@ -23,7 +23,7 @@ const Home = () => {
   const [createTarget, { isLoadingCreateTarget, isSuccess, error }] = useCreateTargetMutation();
   const [getTopics, { isTopicsLoading }] = useTopicsMutation();
   const [topics, setTopics] = useState([]);
-
+  const [target, setTarget] = useState({});
   useEffect(() => {
     getTopics().then(data => {
       let topicsPipe = [];
@@ -45,8 +45,29 @@ const Home = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
+
+  const setTargetDate = data => {
+    setTarget(prevState => {
+      return {
+        ...prevState,
+        title: data.targetTitle,
+        lat: -94.5566,
+        lng: -94.5566,
+        radius: data.area,
+        topic_id: data.topic,
+      };
+    });
+  };
+  useEffect(() => {}, [target]);
   const onSubmit = data => {
-    createTarget(data);
+    setTargetDate(data);
+    createTarget(target)
+      .then(data => {
+        console.log('SUCCESSSSSSS');
+      })
+      .catch(error => {
+        console.log('SUCCESSSNT');
+      });
   };
   return (
     <div className="home">
@@ -56,16 +77,17 @@ const Home = () => {
         <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
         {topics.length > 0 ? (
           <div>
-            <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)}>
+            <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
               <label htmlFor="area">{t('home.create.area')}</label>
               <Input register={register} type="text" name="area" />
               <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
               <Input register={register} type="text" name="targetTitle" />
               <label htmlFor="topic">{t('home.create.topic')}</label>
               <ComboBox register={register} name="topic" dataSource={topics} />
-              <button type="submit" className="button">
+              <Button type="submit">{t('home.create.saveTarget')}</Button>
+              {/* <button type="submit" className="button">
                 {t('home.create.saveTarget')}
-              </button>
+              </button> */}
             </form>
           </div>
         ) : null}
