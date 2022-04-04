@@ -7,8 +7,8 @@
     "logoAltMsg": "React logo",
     "logoutBtn": "Logout",
     "create": {
-      "area" : "Specify area length",
-      "targetTitle" : "Target title",
+      "radius" : "Specify area length",
+      "title" : "Target title",
       "topic" : "Select a topic",
       "saveTarget" : "Save target"
     }

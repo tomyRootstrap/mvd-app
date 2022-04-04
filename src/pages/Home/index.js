@@ -21,9 +21,43 @@ const Home = () => {
   const [logout, { isLoading }] = useLogoutMutation();
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
   const [createTarget, { isLoadingCreateTarget, isSuccess, error }] = useCreateTargetMutation();
-  const [getTopics, { isTopicsLoading }] = useTopicsMutation();
+  const [getTopics] = useTopicsMutation();
   const [topics, setTopics] = useState([]);
   const [target, setTarget] = useState({});
+  const [latLng, setLatLng] = useState({});
+
+  const [currentPosition, setCurrentPosition] = useState({
+    ready: false,
+    where: [],
+    error: null,
+  });
+  const geoOptions = {
+    enableHighAccuracy: true,
+    timeout: 2000,
+    maximumAge: 0,
+  };
+  const geolocationEnabled = () => {
+    setCurrentPosition({ ready: false, error: null });
+    return navigator.geolocation.getCurrentPosition(
+      position => {
+        geoSuccess(position);
+      },
+      () => {},
+      geoOptions
+    );
+  };
+
+  const geoSuccess = position => {
+    setCurrentPosition({
+      ready: true,
+      where: [position.coords.latitude, position.coords.longitude],
+    });
+  };
+
+  useEffect(() => {
+    return geolocationEnabled();
+  }, []);
+
   useEffect(() => {
     getTopics().then(data => {
       let topicsPipe = [];
@@ -35,9 +69,9 @@ const Home = () => {
   }, []);
 
   const schema = z.object({
-    area: z.string().min(1),
-    targetTitle: z.string().min(1),
-    topic: z.string().min(1),
+    radius: z.string().min(1),
+    title: z.string().min(1),
+    topic_id: z.string().min(1),
   });
 
   const {
@@ -46,48 +80,36 @@ const Home = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
-  const setTargetDate = data => {
-    setTarget(prevState => {
-      return {
-        ...prevState,
-        title: data.targetTitle,
-        lat: -94.5566,
-        lng: -94.5566,
-        radius: data.area,
-        topic_id: data.topic,
-      };
-    });
-  };
-  useEffect(() => {}, [target]);
   const onSubmit = data => {
-    setTargetDate(data);
-    createTarget(target)
-      .then(data => {
-        console.log('SUCCESSSSSSS');
-      })
-      .catch(error => {
-        console.log('SUCCESSSNT');
-      });
+    debugger;
+    createTarget({ ...data, ...latLng })
+      .then(data => {})
+      .catch(error => {});
   };
+
+  const sendLatLng = dataFromChild => {
+    setLatLng(dataFromChild);
+  };
+
   return (
     <div className="home">
-      <MapView />
+      <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} />
       <SideBar title={'CREATE TARGET '}>
         <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
         <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
         {topics.length > 0 ? (
           <div>
             <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-              <label htmlFor="area">{t('home.create.area')}</label>
-              <Input register={register} type="text" name="area" />
-              <label htmlFor="targetTitle">{t('home.create.targetTitle')}</label>
-              <Input register={register} type="text" name="targetTitle" />
-              <label htmlFor="topic">{t('home.create.topic')}</label>
-              <ComboBox register={register} name="topic" dataSource={topics} />
+              <label htmlFor="radius">{t('home.create.radius')}</label>
+              <Input register={register} type="text" name="radius" />
+
+              <label htmlFor="title">{t('home.create.title')}</label>
+              <Input register={register} type="text" name="title" />
+
+              <label htmlFor="topic_id">{t('home.create.topic')}</label>
+              <ComboBox register={register} name="topic_id" dataSource={topics} />
+
               <Button type="submit">{t('home.create.saveTarget')}</Button>
-              {/* <button type="submit" className="button">
-                {t('home.create.saveTarget')}
-              </button> */}
             </form>
           </div>
         ) : null}
