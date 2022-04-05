@@ -2,7 +2,7 @@ import Button from 'components/common/Button';
 import useTranslation from 'hooks/useTranslation';
 import { useLogoutMutation } from 'services/auth/auth';
 import MapView from 'components/Map';
-import { useCreateTargetMutation } from 'services/target/target';
+import { useCreateTargetMutation, useGetTargetMutation } from 'services/target/target';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -24,6 +24,8 @@ const Home = () => {
   const [getTopics] = useTopicsMutation();
   const [topics, setTopics] = useState([]);
   const [latLng, setLatLng] = useState({});
+  const [targets, setTargets] = useState([]);
+  const [getTargets] = useGetTargetMutation();
 
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
@@ -64,6 +66,7 @@ const Home = () => {
         topicsPipe.push(topic.topic);
       });
       setTopics(topicsPipe);
+      getAllTargets();
     });
   }, []);
 
@@ -81,17 +84,32 @@ const Home = () => {
 
   const onSubmit = data => {
     createTarget({ ...data, ...latLng })
-      .then(data => {})
+      .then(data => {
+        getAllTargets();
+      })
       .catch(error => {});
   };
-
+  const getAllTargets = () => {
+    getTargets().then(data => {
+      const targetList = data.data.targets;
+      for (let i = 0; i < targetList.length; i++) {
+        const newTarget = {
+          lat: targetList[i].target.lat,
+          lng: targetList[i].target.lng,
+        };
+        setTargets(prevState => {
+          return [...prevState, newTarget];
+        });
+      }
+    });
+  };
   const sendLatLng = dataFromChild => {
     setLatLng(dataFromChild);
   };
 
   return (
     <div className="home">
-      <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} />
+      <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targets} />
       <SideBar title={'CREATE TARGET '}>
         <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
         <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>

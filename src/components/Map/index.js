@@ -13,7 +13,7 @@ const MapView = props => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <AddMarkerToClick sendLatLng={props.sendLatLng} />
+          <AddMarkerToClick sendLatLng={props.sendLatLng} targets={props.targets} />
           <Marker position={props.currentPosition.where} icon={myIcon}></Marker>
         </MapContainer>
       ) : null}
