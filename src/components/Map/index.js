@@ -1,27 +1,8 @@
-import { MapContainer, TileLayer, Marker, useMapEvents, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './style.css';
 import myIcon from './Icon';
-import { useState } from 'react';
-
-const AddMarkerToClick = props => {
-  const [markers, setMarkers] = useState([]);
-
-  const map = useMapEvents({
-    click(e) {
-      const newMarker = e.latlng;
-      setMarkers([...markers, newMarker]);
-      props.sendLatLng(e.latlng);
-    },
-  });
-  return (
-    <>
-      {markers.map((marker, index) => (
-        <Marker position={marker} icon={myIcon} key={index}></Marker>
-      ))}
-    </>
-  );
-};
+import AddMarkerToClick from '../target/index';
 
 const MapView = props => {
   return (

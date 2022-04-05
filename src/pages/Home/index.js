@@ -23,7 +23,6 @@ const Home = () => {
   const [createTarget, { isLoadingCreateTarget, isSuccess, error }] = useCreateTargetMutation();
   const [getTopics] = useTopicsMutation();
   const [topics, setTopics] = useState([]);
-  const [target, setTarget] = useState({});
   const [latLng, setLatLng] = useState({});
 
   const [currentPosition, setCurrentPosition] = useState({
@@ -81,7 +80,6 @@ const Home = () => {
   } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = data => {
-    debugger;
     createTarget({ ...data, ...latLng })
       .then(data => {})
       .catch(error => {});
