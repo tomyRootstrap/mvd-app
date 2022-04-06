@@ -1,13 +1,15 @@
+import useTranslation from 'hooks/useTranslation';
 import React, { Component } from 'react';
 import logo from '../../assets/smilies.png';
 
 import './style.css';
 
 const SideBar = props => {
+  const t = useTranslation();
   return (
     <div className="side-bar">
       <div className="side-bar-header">
-        <h1 className="side-bar-header-title">{props.title}</h1>
+        <h1 className="side-bar-header-title">{t(props.title)}</h1>
       </div>
 
       {props.children}

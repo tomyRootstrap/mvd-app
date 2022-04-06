@@ -10,16 +10,15 @@ const targetApi = api.injectEndpoints({
         body: { target },
       }),
     }),
-    getTarget: builder.mutation({
-      query: target => ({
+    getTargets: builder.query({
+      query: () => ({
         url: endpoints.TARGET,
-        method: 'GET',
       }),
     }),
   }),
   overrideExisting: true,
 });
 
-export const { useCreateTargetMutation, useGetTargetMutation } = targetApi;
+export const { useCreateTargetMutation, useGetTargetsQuery } = targetApi;
 
 export const selectTarget = state => state.target;

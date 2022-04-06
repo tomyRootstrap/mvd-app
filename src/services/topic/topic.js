@@ -3,16 +3,15 @@ import { api } from 'services/api';
 
 const topicApi = api.injectEndpoints({
   endpoints: builder => ({
-    topics: builder.mutation({
+    topics: builder.query({
       query: () => ({
         url: endpoints.GET_TOPICS,
-        method: 'GET',
       }),
     }),
   }),
   overrideExisting: true,
 });
 
-export const { useTopicsMutation } = topicApi;
+export const { useTopicsQuery } = topicApi;
 
 export const selectTopics = state => state.topics;

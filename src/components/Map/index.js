@@ -1,8 +1,9 @@
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './style.css';
 import myIcon from './Icon';
-import AddMarkerToClick from '../target/index';
+import Target from '../target';
+import { useState } from 'react';
 
 const MapView = props => {
   return (
@@ -13,7 +14,7 @@ const MapView = props => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <AddMarkerToClick sendLatLng={props.sendLatLng} targets={props.targets} />
+          <Target sendLatLng={props.sendLatLng} targets={props.targets} />
           <Marker position={props.currentPosition.where} icon={myIcon}></Marker>
         </MapContainer>
       ) : null}

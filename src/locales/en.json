@@ -37,7 +37,7 @@
     "labels": {
       "email": "Email",
       "password": "Password"
-    },
+    },   
     "errors": {
       "emailMsg": "Must provide an email",
       "passwordMsg": "Must provide a password"
@@ -45,5 +45,10 @@
     "button":{
       "signin": "Sign in"
     }
+  },
+  "sideBar":{
+    "create": {
+      "title": "Create target"
+    } 
   }
 }

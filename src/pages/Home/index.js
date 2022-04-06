@@ -2,7 +2,7 @@ import Button from 'components/common/Button';
 import useTranslation from 'hooks/useTranslation';
 import { useLogoutMutation } from 'services/auth/auth';
 import MapView from 'components/Map';
-import { useCreateTargetMutation, useGetTargetMutation } from 'services/target/target';
+import { useCreateTargetMutation, useGetTargetsQuery } from 'services/target/target';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -10,23 +10,22 @@ import Input from 'components/form/Input';
 import ComboBox from 'components/form/ComboBox';
 
 import './styles.css';
-import '../../components/side-bar/style.css';
+import '../../components/sideBar/style.css';
 import { useEffect, useState } from 'react';
-import { useTopicsMutation } from 'services/topic/topic';
-import SideBar from 'components/side-bar';
+import { useTopicsQuery } from 'services/topic/topic';
+import SideBar from 'components/sideBar';
 import sideBarIcon from '../../assets/aim.png';
 
 const Home = () => {
   const t = useTranslation();
-  const [logout, { isLoading }] = useLogoutMutation();
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
+  const [logout, { isLoading }] = useLogoutMutation();
   const [createTarget, { isLoadingCreateTarget, isSuccess, error }] = useCreateTargetMutation();
-  const [getTopics] = useTopicsMutation();
-  const [topics, setTopics] = useState([]);
+  const { data: topics } = useTopicsQuery();
+  const { data: targets } = useGetTargetsQuery();
+  const [topicsList, setTopicsList] = useState([]);
+  const [targetsList, setTargetsList] = useState([]);
   const [latLng, setLatLng] = useState({});
-  const [targets, setTargets] = useState([]);
-  const [getTargets] = useGetTargetMutation();
-
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
     where: [],
@@ -59,17 +58,28 @@ const Home = () => {
     return geolocationEnabled();
   }, []);
 
-  useEffect(() => {
-    getTopics().then(data => {
-      let topicsPipe = [];
-      data.data.topics.map(topic => {
-        topicsPipe.push(topic.topic);
-      });
-      setTopics(topicsPipe);
-      getAllTargets();
+  const parseTopics = () => {
+    let topicsParsedList = [];
+    topics?.topics.map(topic => {
+      topicsParsedList.push({ id: topic.topic.id, label: topic.topic.label });
     });
-  }, []);
+    setTopicsList(topicsParsedList);
+  };
 
+  const parseTargets = () => {
+    let targetsParsedList = [];
+    targets?.targets.map(target => {
+      targetsParsedList.push([target.target.lat, target.target.lng]);
+    });
+    setTargetsList(targetsParsedList);
+  };
+
+  useEffect(() => {
+    parseTopics();
+  }, [topics]);
+  useEffect(() => {
+    parseTargets();
+  }, [targets]);
   const schema = z.object({
     radius: z.string().min(1),
     title: z.string().min(1),
@@ -85,35 +95,35 @@ const Home = () => {
   const onSubmit = data => {
     createTarget({ ...data, ...latLng })
       .then(data => {
-        getAllTargets();
+        // getAllTargets();
       })
       .catch(error => {});
   };
-  const getAllTargets = () => {
-    getTargets().then(data => {
-      const targetList = data.data.targets;
-      for (let i = 0; i < targetList.length; i++) {
-        const newTarget = {
-          lat: targetList[i].target.lat,
-          lng: targetList[i].target.lng,
-        };
-        setTargets(prevState => {
-          return [...prevState, newTarget];
-        });
-      }
-    });
-  };
+  // const getAllTargets = () => {
+  //   getTargets().then(data => {
+  //     const targetList = data.data.targets;
+  //     for (let i = 0; i < targetList.length; i++) {
+  //       const newTarget = {
+  //         lat: targetList[i].target.lat,
+  //         lng: targetList[i].target.lng,
+  //       };
+  //       setTargets(prevState => {
+  //         return [...prevState, newTarget];
+  //       });
+  //     }
+  //   });
+  // };
   const sendLatLng = dataFromChild => {
     setLatLng(dataFromChild);
   };
 
   return (
     <div className="home">
-      <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targets} />
-      <SideBar title={'CREATE TARGET '}>
+      <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targetsList} />
+      <SideBar title={'sideBar.create.title'}>
         <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
         <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
-        {topics.length > 0 ? (
+        {topics ? (
           <div>
             <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
               <label htmlFor="radius">{t('home.create.radius')}</label>
@@ -123,7 +133,7 @@ const Home = () => {
               <Input register={register} type="text" name="title" />
 
               <label htmlFor="topic_id">{t('home.create.topic')}</label>
-              <ComboBox register={register} name="topic_id" dataSource={topics} />
+              <ComboBox register={register} name="topic_id" dataSource={topicsList} />
 
               <Button type="submit">{t('home.create.saveTarget')}</Button>
             </form>
