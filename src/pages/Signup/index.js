@@ -25,8 +25,8 @@ const Signup = () => {
   const { user, authenticated } = useAuth();
   const [signup, { isLoading, isSuccess, error }] = useSignupMutation();
   const genderList = [
-    { value: 'female', name: 'female' },
-    { value: 'male', name: 'male' },
+    { id: 'female', label: 'female' },
+    { id: 'male', label: 'male' },
   ];
   const schema = z
     .object({
