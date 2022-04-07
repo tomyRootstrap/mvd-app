@@ -93,26 +93,9 @@ const Home = () => {
   } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = data => {
-    createTarget({ ...data, ...latLng })
-      .then(data => {
-        // getAllTargets();
-      })
-      .catch(error => {});
+    createTarget({ ...data, ...latLng });
   };
-  // const getAllTargets = () => {
-  //   getTargets().then(data => {
-  //     const targetList = data.data.targets;
-  //     for (let i = 0; i < targetList.length; i++) {
-  //       const newTarget = {
-  //         lat: targetList[i].target.lat,
-  //         lng: targetList[i].target.lng,
-  //       };
-  //       setTargets(prevState => {
-  //         return [...prevState, newTarget];
-  //       });
-  //     }
-  //   });
-  // };
+
   const sendLatLng = dataFromChild => {
     setLatLng(dataFromChild);
   };
