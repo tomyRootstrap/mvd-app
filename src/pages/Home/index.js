@@ -25,6 +25,7 @@ const Home = () => {
   const { data: targets } = useGetTargetsQuery();
   const [topicsList, setTopicsList] = useState([]);
   const [targetsList, setTargetsList] = useState([]);
+  const [isTargetCreationLimit, setIsTargetCreationLimit] = useState(false);
   const [latLng, setLatLng] = useState({});
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
@@ -92,8 +93,15 @@ const Home = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
+  useEffect(() => {
+    setIsTargetCreationLimit(false);
+  }, []);
   const onSubmit = data => {
-    createTarget({ ...data, ...latLng });
+    if (targetsList.length <= 9) {
+      createTarget({ ...data, ...latLng });
+    } else {
+      setIsTargetCreationLimit(true);
+    }
   };
 
   const sendLatLng = dataFromChild => {
@@ -117,7 +125,7 @@ const Home = () => {
 
               <label htmlFor="topic_id">{t('home.create.topic')}</label>
               <ComboBox register={register} name="topic_id" dataSource={topicsList} />
-
+              {isTargetCreationLimit ? <p>{t('target.create.alert.limit')}</p> : null}
               <Button type="submit">{t('home.create.saveTarget')}</Button>
             </form>
           </div>
