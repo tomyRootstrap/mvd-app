@@ -93,9 +93,6 @@ const Home = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
-  useEffect(() => {
-    setIsTargetCreationLimit(false);
-  }, []);
   const onSubmit = data => {
     if (targetsList.length <= 9) {
       createTarget({ ...data, ...latLng });
@@ -126,7 +123,9 @@ const Home = () => {
               <label htmlFor="topic_id">{t('home.create.topic')}</label>
               <ComboBox register={register} name="topic_id" dataSource={topicsList} />
               {isTargetCreationLimit ? <p>{t('target.create.alert.limit')}</p> : null}
-              <Button type="submit">{t('home.create.saveTarget')}</Button>
+              <Button type="submit" disabled={!isTargetCreationLimit}>
+                {t('home.create.saveTarget')}
+              </Button>
             </form>
           </div>
         ) : null}
