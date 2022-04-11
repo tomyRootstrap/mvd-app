@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.css';
-import icon from '../../assets/menu-icon.png';
 
-export const Menu = () => {
+export const Menu = ({ switchTab }) => {
+  const changeTab = name => {
+    switchTab(name);
+  };
   return (
     <div className="hamburger-menu">
       <input id="menu__toggle" type="checkbox" />
@@ -11,10 +13,14 @@ export const Menu = () => {
       </label>
       <ul className="menu__box">
         <li>
-          <p className="menu__item">Edit profile</p>
+          <button className="menu__item" onClick={() => changeTab('EDIT_PROFILE')}>
+            Edit profile
+          </button>
         </li>
         <li>
-          <p className="menu__item">Create target</p>
+          <button className="menu__item" onClick={() => changeTab('CREATE_TARGET')}>
+            Create target
+          </button>
         </li>
       </ul>
     </div>

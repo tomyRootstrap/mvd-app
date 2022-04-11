@@ -11,7 +11,7 @@ const SideBar = props => {
     <div className="side-bar">
       <div className="side-bar-header">
         <div className="w-10">
-          <Menu />
+          <Menu switchTab={props.switchTab} />
         </div>
         <div className="w-90">
           <h1 className="side-bar-header-title">{t(props.title)}</h1>
