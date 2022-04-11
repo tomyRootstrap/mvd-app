@@ -26,6 +26,7 @@ const Home = () => {
   const [topicsList, setTopicsList] = useState([]);
   const [targetsList, setTargetsList] = useState([]);
   const [latLng, setLatLng] = useState({});
+  const [tabSelected, setTabSelected] = useState('CREATE_TARGET');
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
     where: [],
@@ -103,26 +104,35 @@ const Home = () => {
   return (
     <div className="home">
       <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targetsList} />
-      <SideBar title={'sideBar.create.title'}>
-        <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
-        <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
-        {topics ? (
-          <div>
-            <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-              <label htmlFor="radius">{t('home.create.radius')}</label>
-              <Input register={register} type="text" name="radius" />
+      {(() => {
+        switch (tabSelected) {
+          case 'CREATE_TARGET':
+            return (
+              <SideBar title={'sideBar.create.title'}>
+                <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
+                <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
+                {topics ? (
+                  <div>
+                    <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+                      <label htmlFor="radius">{t('home.create.radius')}</label>
+                      <Input register={register} type="text" name="radius" />
+                      <label htmlFor="title">{t('home.create.title')}</label>
+                      <Input register={register} type="text" name="title" />
+                      <label htmlFor="topic_id">{t('home.create.topic')}</label>
+                      <ComboBox register={register} name="topic_id" dataSource={topicsList} />
+                      <Button type="submit">{t('home.create.saveTarget')}</Button>
+                    </form>
+                  </div>
+                ) : null}
+              </SideBar>
+            );
+          case 'EDIT_PROFILE':
+            return null;
+          default:
+            return 'CREATE_TARGET';
+        }
+      })()}
 
-              <label htmlFor="title">{t('home.create.title')}</label>
-              <Input register={register} type="text" name="title" />
-
-              <label htmlFor="topic_id">{t('home.create.topic')}</label>
-              <ComboBox register={register} name="topic_id" dataSource={topicsList} />
-
-              <Button type="submit">{t('home.create.saveTarget')}</Button>
-            </form>
-          </div>
-        ) : null}
-      </SideBar>
       <h1>{t('home.welcomeMsg')}</h1>
       <div className="home__logout">
         <Button handleClick={handleLogout} disabled={isLoading}>
