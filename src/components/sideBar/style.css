@@ -60,3 +60,12 @@
   background-color: var(--color-light-grey);
   cursor: unset;
 }
+
+.w-10{
+  width: 10%;
+  display: inline-block;
+}
+.w-90{
+  width: 90%;
+  display: inline-block;
+}

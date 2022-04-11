@@ -1,3 +1,4 @@
+import Menu from 'components/menu';
 import useTranslation from 'hooks/useTranslation';
 import React, { Component } from 'react';
 import logo from '../../assets/smilies.png';
@@ -9,7 +10,12 @@ const SideBar = props => {
   return (
     <div className="side-bar">
       <div className="side-bar-header">
-        <h1 className="side-bar-header-title">{t(props.title)}</h1>
+        <div className="w-10">
+          <Menu />
+        </div>
+        <div className="w-90">
+          <h1 className="side-bar-header-title">{t(props.title)}</h1>
+        </div>
       </div>
 
       {props.children}
