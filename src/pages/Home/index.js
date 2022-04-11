@@ -100,7 +100,9 @@ const Home = () => {
   const sendLatLng = dataFromChild => {
     setLatLng(dataFromChild);
   };
-
+  const switchTab = dataFromChild => {
+    setTabSelected(dataFromChild);
+  };
   return (
     <div className="home">
       <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targetsList} />
@@ -108,7 +110,7 @@ const Home = () => {
         switch (tabSelected) {
           case 'CREATE_TARGET':
             return (
-              <SideBar title={'sideBar.create.title'}>
+              <SideBar title={'sideBar.create.title'} switchTab={switchTab}>
                 <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
                 <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
                 {topics ? (
