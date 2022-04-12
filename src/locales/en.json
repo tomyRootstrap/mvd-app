@@ -7,10 +7,10 @@
     "logoAltMsg": "React logo",
     "logoutBtn": "Logout",
     "create": {
-      "radius" : "Specify area length",
-      "title" : "Target title",
-      "topic" : "Select a topic",
-      "saveTarget" : "Save target"
+      "radius": "Specify area length",
+      "title": "Target title",
+      "topic": "Select a topic",
+      "saveTarget": "Save target"
     }
   },
   "signup": {
@@ -29,26 +29,33 @@
   },
   "login": {
     "title": "TARGET MVD",
-    "subTitle":"Find people near you & Connect",
-    "explanation":"Create a target wherever on the map, specify your interest: Travel, Dating, Music, etc and start conecting with others who share your interest.",
+    "subTitle": "Find people near you & Connect",
+    "explanation": "Create a target wherever on the map, specify your interest: Travel, Dating, Music, etc and start conecting with others who share your interest.",
     "dontHaveAccountMsg": "Sign up",
     "forgot": "Forgot your password?",
-    "faceBook":"Connect with facebook",
+    "faceBook": "Connect with facebook",
     "labels": {
       "email": "Email",
       "password": "Password"
-    },   
+    },
     "errors": {
       "emailMsg": "Must provide an email",
       "passwordMsg": "Must provide a password"
     },
-    "button":{
+    "button": {
       "signin": "Sign in"
     }
   },
-  "sideBar":{
+  "sideBar": {
     "create": {
       "title": "Create target"
-    } 
+    }
+  },
+  "target": {
+    "create": {
+      "alert": {        
+        "limit": "Creation target limit exceeded (max 10)."
+      }
+    }
   }
 }

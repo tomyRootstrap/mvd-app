@@ -25,6 +25,7 @@ const Home = () => {
   const { data: targets } = useGetTargetsQuery();
   const [topicsList, setTopicsList] = useState([]);
   const [targetsList, setTargetsList] = useState([]);
+  const [isTargetCreationLimit, setIsTargetCreationLimit] = useState(false);
   const [latLng, setLatLng] = useState({});
   const [tabSelected, setTabSelected] = useState('CREATE_TARGET');
   const [currentPosition, setCurrentPosition] = useState({
@@ -94,7 +95,11 @@ const Home = () => {
   } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = data => {
-    createTarget({ ...data, ...latLng });
+    if (targetsList.length <= 9) {
+      createTarget({ ...data, ...latLng });
+    } else {
+      setIsTargetCreationLimit(true);
+    }
   };
 
   const sendLatLng = dataFromChild => {
