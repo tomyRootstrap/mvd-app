@@ -1,9 +1,8 @@
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './style.css';
 import myIcon from './Icon';
 import Target from '../target';
-import { useState } from 'react';
 
 const MapView = props => {
   return (

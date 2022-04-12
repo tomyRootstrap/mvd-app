@@ -15,12 +15,14 @@ import { useEffect, useState } from 'react';
 import { useTopicsQuery } from 'services/topic/topic';
 import SideBar from 'components/sideBar';
 import sideBarIcon from '../../assets/aim.png';
+import { useProfilePasswordMutation } from 'services/profile/profile';
 
 const Home = () => {
   const t = useTranslation();
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
   const [logout, { isLoading }] = useLogoutMutation();
   const [createTarget] = useCreateTargetMutation();
+  const [editProfile] = useProfilePasswordMutation();
   const { data: topics } = useTopicsQuery();
   const { data: targets } = useGetTargetsQuery();
   const [topicsList, setTopicsList] = useState([]);
@@ -28,6 +30,11 @@ const Home = () => {
   const [isTargetCreationLimit, setIsTargetCreationLimit] = useState(false);
   const [latLng, setLatLng] = useState({});
   const [tabSelected, setTabSelected] = useState('CREATE_TARGET');
+  const [profile, setProfile] = useState({
+    currentPassword: null,
+    password: null,
+    repeatPassword: null,
+  });
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
     where: [],
@@ -98,8 +105,19 @@ const Home = () => {
     if (targetsList.length <= 9) {
       createTarget({ ...data, ...latLng });
     } else {
-      setIsTargetCreationLimit(true);
+      if (targetsList.length > 9) setIsTargetCreationLimit(true);
     }
+  };
+
+  const onSubmitEditProfile = () => {
+    editProfile(profile)
+      .then(data => {
+        console.log(data);
+        debugger;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const sendLatLng = dataFromChild => {
@@ -140,35 +158,51 @@ const Home = () => {
                   <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
                   <h3 className="side-bar-header-sub-title">{t('profile.edit.title')}</h3>
                   <div>
-                    <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-                      <label htmlFor="email">{t('profile.edit.email')}</label>
-                      <Input register={register} type="email" name="email" error={errors.email} />
-                      <label htmlFor="password">{t('profile.edit.currentPassword')}</label>
-                      <Input
-                        register={register}
+                    <form className="side-bar-form" onSubmit={onSubmitEditProfile} noValidate>
+                      <label htmlFor="currentPassword">{t('profile.edit.currentPassword')}</label>
+                      <input
                         type="password"
-                        name="password"
-                        error={errors.password}
+                        value={profile.currentPassword}
+                        name="currentPassword"
+                        onChange={e =>
+                          setProfile(prevState => {
+                            return {
+                              ...prevState,
+                              currentPassword: e.target.value,
+                            };
+                          })
+                        }
                       />
                       <label htmlFor="password">{t('profile.edit.newPassword')}</label>
-                      <Input
-                        register={register}
+                      <input
                         type="password"
-                        name="passwordConfirmation"
-                        error={errors.passwordConfirmation}
+                        value={profile.password}
+                        onChange={e =>
+                          setProfile(prevState => {
+                            return {
+                              ...prevState,
+                              password: e.target.value,
+                            };
+                          })
+                        }
                       />
-                      <label htmlFor="username">{t('profile.edit.repeatPassword')}</label>
-                      <Input
-                        register={register}
-                        type="text"
-                        name="username"
-                        error={errors.username}
+                      <label htmlFor="password_confirmation">
+                        {t('profile.edit.repeatPassword')}
+                      </label>
+                      <input
+                        type="password"
+                        name="password_confirmation"
+                        value={profile.repeatPassword}
+                        onChange={e =>
+                          setProfile(prevState => {
+                            return {
+                              ...prevState,
+                              repeatPassword: e.target.value,
+                            };
+                          })
+                        }
                       />
-                      <div className="button-container">
-                        <Button type="submit" disabled={isLoading}>
-                          {t('profile.edit.saveButton')}
-                        </Button>
-                      </div>
+                      <Button type="submit">{t('profile.edit.saveButton')}</Button>
                     </form>
                   </div>
                 </>
