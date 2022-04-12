@@ -1,7 +1,10 @@
 import React from 'react';
+import { useLogoutMutation } from 'services/auth/auth';
 import './style.css';
 
 export const Menu = ({ switchTab }) => {
+  const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
+  const [logout] = useLogoutMutation();
   const changeTab = name => {
     switchTab(name);
   };
@@ -20,6 +23,11 @@ export const Menu = ({ switchTab }) => {
         <li>
           <button className="menu__item" onClick={() => changeTab('CREATE_TARGET')}>
             Create target
+          </button>
+        </li>
+        <li>
+          <button className="menu__item" onClick={() => handleLogout()}>
+            Log Out
           </button>
         </li>
       </ul>

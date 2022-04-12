@@ -212,12 +212,6 @@ const Home = () => {
           }
         })()}
       </SideBar>
-      <h1>{t('home.welcomeMsg')}</h1>
-      <div className="home__logout">
-        <Button handleClick={handleLogout} disabled={isLoading}>
-          {t('home.logoutBtn')}
-        </Button>
-      </div>
     </div>
   );
 };
