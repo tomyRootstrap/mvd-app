@@ -138,20 +138,39 @@ const Home = () => {
               return (
                 <>
                   <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
-                  <h3 className="side-bar-header-sub-title">EDIT PROFILE</h3>
-                  {topics ? (
-                    <div>
-                      <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-                        <label htmlFor="radius">{t('home.create.radius')}</label>
-                        <Input register={register} type="text" name="radius" />
-                        <label htmlFor="title">{t('home.create.title')}</label>
-                        <Input register={register} type="text" name="title" />
-                        <label htmlFor="topic_id">{t('home.create.topic')}</label>
-                        <ComboBox register={register} name="topic_id" dataSource={topicsList} />
-                        <Button type="submit">{t('home.create.saveTarget')}</Button>
-                      </form>
-                    </div>
-                  ) : null}
+                  <h3 className="side-bar-header-sub-title">{t('profile.edit.title')}</h3>
+                  <div>
+                    <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+                      <label htmlFor="email">{t('profile.edit.email')}</label>
+                      <Input register={register} type="email" name="email" error={errors.email} />
+                      <label htmlFor="password">{t('profile.edit.currentPassword')}</label>
+                      <Input
+                        register={register}
+                        type="password"
+                        name="password"
+                        error={errors.password}
+                      />
+                      <label htmlFor="password">{t('profile.edit.newPassword')}</label>
+                      <Input
+                        register={register}
+                        type="password"
+                        name="passwordConfirmation"
+                        error={errors.passwordConfirmation}
+                      />
+                      <label htmlFor="username">{t('profile.edit.repeatPassword')}</label>
+                      <Input
+                        register={register}
+                        type="text"
+                        name="username"
+                        error={errors.username}
+                      />
+                      <div className="button-container">
+                        <Button type="submit" disabled={isLoading}>
+                          {t('profile.edit.saveButton')}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
                 </>
               );
             default:
