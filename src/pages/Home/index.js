@@ -15,19 +15,18 @@ import { useEffect, useState } from 'react';
 import { useTopicsQuery } from 'services/topic/topic';
 import SideBar from 'components/sideBar';
 import sideBarIcon from '../../assets/aim.png';
-import Menu from 'components/menu';
 
 const Home = () => {
   const t = useTranslation();
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
   const [logout, { isLoading }] = useLogoutMutation();
-  const [createTarget, { isLoadingCreateTarget, isSuccess, error }] = useCreateTargetMutation();
+  const [createTarget] = useCreateTargetMutation();
   const { data: topics } = useTopicsQuery();
   const { data: targets } = useGetTargetsQuery();
   const [topicsList, setTopicsList] = useState([]);
   const [targetsList, setTargetsList] = useState([]);
   const [latLng, setLatLng] = useState({});
-  const [tabSelected, setTabSelected] = useState(null);
+  const [tabSelected, setTabSelected] = useState('CREATE_TARGET');
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
     where: [],
