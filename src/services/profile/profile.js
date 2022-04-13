@@ -7,7 +7,7 @@ const profileApi = api.injectEndpoints({
       query: body => ({
         url: endpoints.PROFILE_PASSWORD,
         body: { body },
-        method: 'POST',
+        method: 'PUT',
       }),
     }),
   }),

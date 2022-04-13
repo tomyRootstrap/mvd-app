@@ -31,9 +31,9 @@ const Home = () => {
   const [latLng, setLatLng] = useState({});
   const [tabSelected, setTabSelected] = useState('CREATE_TARGET');
   const [profile, setProfile] = useState({
-    currentPassword: null,
-    password: null,
-    repeatPassword: null,
+    currentPassword: '',
+    password: '',
+    password_confirmation: '',
   });
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
@@ -108,23 +108,16 @@ const Home = () => {
       if (targetsList.length > 9) setIsTargetCreationLimit(true);
     }
   };
-
-  const onSubmitEditProfile = () => {
-    editProfile(profile)
-      .then(data => {
-        console.log(data);
-        debugger;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   const sendLatLng = dataFromChild => {
     setLatLng(dataFromChild);
   };
   const switchTab = dataFromChild => {
     setTabSelected(dataFromChild);
+  };
+  const onSubmitEditProfile = e => {
+    e.preventDefault();
+    debugger;
+    editProfile(profile);
   };
   return (
     <div className="home">
@@ -192,12 +185,12 @@ const Home = () => {
                       <input
                         type="password"
                         name="password_confirmation"
-                        value={profile.repeatPassword}
+                        value={profile.password_confirmation}
                         onChange={e =>
                           setProfile(prevState => {
                             return {
                               ...prevState,
-                              repeatPassword: e.target.value,
+                              password_confirmation: e.target.value,
                             };
                           })
                         }
