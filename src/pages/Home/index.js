@@ -94,12 +94,22 @@ const Home = () => {
     title: z.string().min(1),
     topic_id: z.string().min(1),
   });
-
+  const editProfileSchema = z.object({
+    current_password: z.string().min(1),
+    password: z.string().min(1),
+    password_confirmation: z.string().min(1),
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
+
+  const {
+    register: editProfileForm,
+    handleSubmit: handleEditProfileForm,
+    formState: { editProfileErrors },
+  } = useForm({ resolver: zodResolver(editProfileSchema) });
 
   const onSubmit = data => {
     if (targetsList.length <= 9) {
@@ -114,10 +124,9 @@ const Home = () => {
   const switchTab = dataFromChild => {
     setTabSelected(dataFromChild);
   };
-  const onSubmitEditProfile = e => {
-    e.preventDefault();
+  const onSubmitEditProfile = data => {
     debugger;
-    editProfile(profile);
+    editProfile(data);
   };
   return (
     <div className="home">
@@ -151,49 +160,22 @@ const Home = () => {
                   <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
                   <h3 className="side-bar-header-sub-title">{t('profile.edit.title')}</h3>
                   <div>
-                    <form className="side-bar-form" onSubmit={onSubmitEditProfile} noValidate>
-                      <label htmlFor="currentPassword">{t('profile.edit.currentPassword')}</label>
-                      <input
-                        type="password"
-                        value={profile.currentPassword}
-                        name="currentPassword"
-                        onChange={e =>
-                          setProfile(prevState => {
-                            return {
-                              ...prevState,
-                              currentPassword: e.target.value,
-                            };
-                          })
-                        }
-                      />
+                    <form
+                      className="side-bar-form"
+                      onSubmit={handleEditProfileForm(onSubmitEditProfile)}
+                      noValidate
+                    >
+                      <label htmlFor="current_password">{t('profile.edit.currentPassword')}</label>
+                      <Input type="password" register={editProfileForm} name="current_password" />
                       <label htmlFor="password">{t('profile.edit.newPassword')}</label>
-                      <input
-                        type="password"
-                        value={profile.password}
-                        onChange={e =>
-                          setProfile(prevState => {
-                            return {
-                              ...prevState,
-                              password: e.target.value,
-                            };
-                          })
-                        }
-                      />
+                      <Input type="password" register={editProfileForm} name="password" />
                       <label htmlFor="password_confirmation">
                         {t('profile.edit.repeatPassword')}
                       </label>
-                      <input
+                      <Input
                         type="password"
                         name="password_confirmation"
-                        value={profile.password_confirmation}
-                        onChange={e =>
-                          setProfile(prevState => {
-                            return {
-                              ...prevState,
-                              password_confirmation: e.target.value,
-                            };
-                          })
-                        }
+                        register={editProfileForm}
                       />
                       <Button type="submit">{t('profile.edit.saveButton')}</Button>
                     </form>

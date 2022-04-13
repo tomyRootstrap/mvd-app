@@ -6,7 +6,7 @@ const profileApi = api.injectEndpoints({
     profilePassword: builder.mutation({
       query: body => ({
         url: endpoints.PROFILE_PASSWORD,
-        body: { body },
+        body: body,
         method: 'PUT',
       }),
     }),
