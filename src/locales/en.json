@@ -57,5 +57,9 @@
         "limit": "Creation target limit exceeded (max 10)."
       }
     }
+  },
+  "forgotPassword":{
+    "email":"Email",
+    "button":"Recover"
   }
 }
