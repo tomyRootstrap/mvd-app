@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLogoutMutation } from 'services/auth/auth';
 import './style.css';
 
@@ -8,13 +8,17 @@ export const Menu = ({ switchTab }) => {
   const changeTab = name => {
     switchTab(name);
   };
+  const [isOpen, setIsOpen] = useState(false);
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div className="hamburger-menu">
-      <input id="menu__toggle" type="checkbox" />
-      <label className="menu__btn" htmlFor="menu__toggle">
+      <input className="menuToggle" type="checkbox" />
+      <button className="menu__btn" htmlFor="menuToggle" onClick={handleClick}>
         <span></span>
-      </label>
-      <ul className="menu__box">
+      </button>
+      <ul className={`menu__box ${isOpen ? 'open' : 'close'}`}>
         <li>
           <button className="menu__item" onClick={() => changeTab('EDIT_PROFILE')}>
             Edit profile
