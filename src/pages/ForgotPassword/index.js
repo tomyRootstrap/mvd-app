@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import useTranslation from 'hooks/useTranslation';
+import emailjs from 'emailjs-com';
+
 import './style.css';
 
 const ForgotPassword = () => {
@@ -19,7 +21,35 @@ const ForgotPassword = () => {
     formState: { errors: forgotPassowrdErrors },
   } = useForm({ resolver: zodResolver(schema) });
   const [isForgotPassowrd, setIsForgotPassowrd] = useState(true);
-  const onSubmitForgotPassowrd = () => {};
+  const [isSend, setIsSend] = useState(false);
+  const [toSend, setToSend] = useState({
+    message: `Hello, thank you for signing up to MVD! We're excited to have you onboard and will be happy to help you set everything up.`,
+    to: '',
+  });
+
+  const setEmailData = data => {
+    setToSend(prevState => {
+      return {
+        ...prevState,
+        to: data.email,
+      };
+    });
+  };
+  const emailSendRecovery = () => {
+    if (!isSend) {
+      emailjs
+        .send('service_c2myo6u', 'template_zdq8t9e', toSend, 'CzOOH1L12ZmTTkiFU')
+        .then(response => {
+          setIsSend(true);
+        })
+        .catch(err => {});
+    }
+  };
+
+  const onSubmitForgotPassowrd = data => {
+    setEmailData(data);
+    emailSendRecovery();
+  };
   return (
     <div className="row">
       {isForgotPassowrd ? (
@@ -33,7 +63,7 @@ const ForgotPassword = () => {
               error={forgotPassowrdErrors.email}
             />
             <div className="button-container">
-              <Button type="submit"> {t('forgotPassword.Recover')} </Button>
+              <Button type="submit"> {t('forgotPassword.button')} </Button>
             </div>
           </form>
         </div>
