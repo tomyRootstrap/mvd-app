@@ -38,7 +38,7 @@ const ForgotPassword = () => {
   const emailSendRecovery = () => {
     if (!isSend) {
       emailjs
-        .send('service_c2myo6u', 'template_zdq8t9e', toSend, 'CzOOH1L12ZmTTkiFU')
+        .send('service_c2myo6u', 'template_3cw6jas', toSend, 'CzOOH1L12ZmTTkiFU')
         .then(response => {
           setIsSend(true);
         })
@@ -52,7 +52,7 @@ const ForgotPassword = () => {
   };
   return (
     <div className="row">
-      {isForgotPassowrd ? (
+      {!isSend ? (
         <div className="form column left-column">
           <form onSubmit={handleOnSubmitForgotPassowrd(onSubmitForgotPassowrd)} noValidate>
             <label htmlFor="email">{t('forgotPassword.email')}</label>
@@ -67,7 +67,11 @@ const ForgotPassword = () => {
             </div>
           </form>
         </div>
-      ) : null}
+      ) : (
+        <div className="form column left-column">
+          <h3>{t('forgotPassword.message')}</h3>
+        </div>
+      )}
       <div className="column right-column">
         <div className="i6"></div>
         <button id="apple-store"></button>
