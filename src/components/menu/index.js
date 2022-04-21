@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLogoutMutation } from 'services/auth/auth';
 import './style.css';
 import icon from '../../assets/menu-icon.png';
@@ -16,7 +16,7 @@ export const Menu = ({ switchTab }) => {
     <div className="hamburger-menu">
       <input className="menuToggle" type="checkbox" />
       <button className="menu__btn" htmlFor="menuToggle" onClick={handleClick}>
-        <img src={icon} alt=""></img>
+        <img src={icon} alt="Menu button" />
       </button>
       <ul className={`menu__box ${isOpen ? 'open' : 'close'}`}>
         <li>
