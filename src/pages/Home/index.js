@@ -15,18 +15,26 @@ import { useEffect, useState } from 'react';
 import { useTopicsQuery } from 'services/topic/topic';
 import SideBar from 'components/sideBar';
 import sideBarIcon from '../../assets/aim.png';
+import { useProfilePasswordMutation } from 'services/profile/profile';
 
 const Home = () => {
   const t = useTranslation();
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
   const [logout, { isLoading }] = useLogoutMutation();
-  const [createTarget, { isLoadingCreateTarget, isSuccess, error }] = useCreateTargetMutation();
+  const [createTarget] = useCreateTargetMutation();
+  const [editProfile] = useProfilePasswordMutation();
   const { data: topics } = useTopicsQuery();
   const { data: targets } = useGetTargetsQuery();
   const [topicsList, setTopicsList] = useState([]);
   const [targetsList, setTargetsList] = useState([]);
   const [isTargetCreationLimit, setIsTargetCreationLimit] = useState(false);
   const [latLng, setLatLng] = useState({});
+  const [tabSelected, setTabSelected] = useState('CREATE_TARGET');
+  const [profile, setProfile] = useState({
+    currentPassword: '',
+    password: '',
+    password_confirmation: '',
+  });
   const [currentPosition, setCurrentPosition] = useState({
     ready: false,
     where: [],
@@ -86,56 +94,99 @@ const Home = () => {
     title: z.string().min(1),
     topic_id: z.string().min(1),
   });
-
+  const editProfileSchema = z.object({
+    current_password: z.string().min(1),
+    password: z.string().min(1),
+    password_confirmation: z.string().min(1),
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
+  const {
+    register: editProfileForm,
+    handleSubmit: handleEditProfileForm,
+    formState: { editProfileErrors },
+  } = useForm({ resolver: zodResolver(editProfileSchema) });
+
   const onSubmit = data => {
     if (targetsList.length <= 9) {
       createTarget({ ...data, ...latLng });
     } else {
-      setIsTargetCreationLimit(true);
+      if (targetsList.length > 9) setIsTargetCreationLimit(true);
     }
   };
-
   const sendLatLng = dataFromChild => {
     setLatLng(dataFromChild);
   };
-
+  const switchTab = dataFromChild => {
+    setTabSelected(dataFromChild);
+  };
+  const onSubmitEditProfile = data => {
+    debugger;
+    editProfile(data);
+  };
   return (
     <div className="home">
       <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targetsList} />
-      <SideBar title={'sideBar.create.title'}>
-        <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
-        <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
-        {topics ? (
-          <div>
-            <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-              <label htmlFor="radius">{t('home.create.radius')}</label>
-              <Input register={register} type="text" name="radius" />
-
-              <label htmlFor="title">{t('home.create.title')}</label>
-              <Input register={register} type="text" name="title" />
-
-              <label htmlFor="topic_id">{t('home.create.topic')}</label>
-              <ComboBox register={register} name="topic_id" dataSource={topicsList} />
-              {isTargetCreationLimit ? <p>{t('target.create.alert.limit')}</p> : null}
-              <Button type="submit" disabled={!isTargetCreationLimit}>
-                {t('home.create.saveTarget')}
-              </Button>
-            </form>
-          </div>
-        ) : null}
+      <SideBar title={'sideBar.create.title'} switchTab={switchTab}>
+        {(() => {
+          switch (tabSelected) {
+            case 'CREATE_TARGET':
+              return (
+                <>
+                  <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
+                  <h3 className="side-bar-header-sub-title">CREATE NEW TARGET</h3>
+                  {topics ? (
+                    <div>
+                      <form className="side-bar-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+                        <label htmlFor="radius">{t('home.create.radius')}</label>
+                        <Input register={register} type="text" name="radius" />
+                        <label htmlFor="title">{t('home.create.title')}</label>
+                        <Input register={register} type="text" name="title" />
+                        <label htmlFor="topic_id">{t('home.create.topic')}</label>
+                        <ComboBox register={register} name="topic_id" dataSource={topicsList} />
+                        <Button type="submit">{t('home.create.saveTarget')}</Button>
+                      </form>
+                    </div>
+                  ) : null}
+                </>
+              );
+            case 'EDIT_PROFILE':
+              return (
+                <>
+                  <img className="side-bar-header-title-icon" src={sideBarIcon} alt=""></img>
+                  <h3 className="side-bar-header-sub-title">{t('profile.edit.title')}</h3>
+                  <div>
+                    <form
+                      className="side-bar-form"
+                      onSubmit={handleEditProfileForm(onSubmitEditProfile)}
+                      noValidate
+                    >
+                      <label htmlFor="current_password">{t('profile.edit.currentPassword')}</label>
+                      <Input type="password" register={editProfileForm} name="current_password" />
+                      <label htmlFor="password">{t('profile.edit.newPassword')}</label>
+                      <Input type="password" register={editProfileForm} name="password" />
+                      <label htmlFor="password_confirmation">
+                        {t('profile.edit.repeatPassword')}
+                      </label>
+                      <Input
+                        type="password"
+                        name="password_confirmation"
+                        register={editProfileForm}
+                      />
+                      <Button type="submit">{t('profile.edit.saveButton')}</Button>
+                    </form>
+                  </div>
+                </>
+              );
+            default:
+              return null;
+          }
+        })()}
       </SideBar>
-      <h1>{t('home.welcomeMsg')}</h1>
-      <div className="home__logout">
-        <Button handleClick={handleLogout} disabled={isLoading}>
-          {t('home.logoutBtn')}
-        </Button>
-      </div>
     </div>
   );
 };

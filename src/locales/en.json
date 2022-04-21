@@ -57,5 +57,15 @@
         "limit": "Creation target limit exceeded (max 10)."
       }
     }
+  },
+  "profile":{
+    "edit":{
+      "title": "EDIT PROFILE",
+      "email": "Email",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "repeatPassword": "Repeat new password",
+      "saveButton": "Save changes"
+    }
   }
 }
