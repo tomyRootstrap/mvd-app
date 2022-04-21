@@ -62,5 +62,8 @@
     "email":"Email",
     "button":"Recover",
     "message": "Check your email. You will receive instructions on how to change your password."
+  },
+  "changePassword":{
+    
   }
 }
