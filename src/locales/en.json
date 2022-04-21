@@ -53,17 +53,24 @@
   },
   "target": {
     "create": {
-      "alert": {        
+      "alert": {
         "limit": "Creation target limit exceeded (max 10)."
       }
     }
   },
-  "forgotPassword":{
-    "email":"Email",
-    "button":"Recover",
+  "forgotPassword": {
+    "email": "Email",
+    "button": "Recover",
     "message": "Check your email. You will receive instructions on how to change your password."
   },
-  "changePassword":{
-    
+  "profile": {
+    "edit": {
+      "title": "EDIT PROFILE",
+      "email": "Email",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "repeatPassword": "Repeat new password",
+      "saveButton": "Save changes"
+    }
   }
 }
