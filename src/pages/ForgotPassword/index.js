@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import useTranslation from 'hooks/useTranslation';
-import emailjs from 'emailjs-com';
 
 import './style.css';
+import { useResetPasswordMutation } from 'services/profile/profile';
 
 const ForgotPassword = () => {
   const t = useTranslation();
@@ -20,48 +20,26 @@ const ForgotPassword = () => {
     handleSubmit: handleOnSubmitForgotPassowrd,
     formState: { errors: forgotPassowrdErrors },
   } = useForm({ resolver: zodResolver(schema) });
-  const [isForgotPassowrd, setIsForgotPassowrd] = useState(true);
   const [isSend, setIsSend] = useState(false);
-  const [toSend, setToSend] = useState({
-    message: `Hello, thank you for signing up to MVD! We're excited to have you onboard and will be happy to help you set everything up.`,
-    to: '',
-  });
-
-  const setEmailData = data => {
-    setToSend(prevState => {
-      return {
-        ...prevState,
-        to: data.email,
-      };
-    });
-  };
-  const emailSendRecovery = () => {
+  const [resetPassword] = useResetPasswordMutation();
+  const redirectUrl = 'https://localhost:3000/login';
+  const onSubmitForgotPassowrd = data => {
     if (!isSend) {
-      emailjs
-        .send('service_c2myo6u', 'template_3cw6jas', toSend, 'CzOOH1L12ZmTTkiFU')
-        .then(response => {
+      resetPassword({ ...data, redirect_url: redirectUrl })
+        .then(data => {
           setIsSend(true);
         })
-        .catch(err => {});
+        .catch(error => {});
     }
   };
 
-  const onSubmitForgotPassowrd = data => {
-    setEmailData(data);
-    emailSendRecovery();
-  };
   return (
     <div className="row">
       {!isSend ? (
         <div className="form column left-column">
           <form onSubmit={handleOnSubmitForgotPassowrd(onSubmitForgotPassowrd)} noValidate>
             <label htmlFor="email">{t('forgotPassword.email')}</label>
-            <Input
-              register={forgotPassowrd}
-              type="email"
-              name="email"
-              error={forgotPassowrdErrors.email}
-            />
+            <Input register={forgotPassowrd} type="email" name="email" />
             <div className="button-container">
               <Button type="submit"> {t('forgotPassword.button')} </Button>
             </div>

@@ -72,5 +72,11 @@
       "repeatPassword": "Repeat new password",
       "saveButton": "Save changes"
     }
+  },
+  "resetPassword":{
+    "title": "Reset password",
+    "button": "Reset",
+    "password": "Password",
+    "passwordConfirmation": "Confirm password"
   }
 }
