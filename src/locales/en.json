@@ -67,5 +67,10 @@
       "repeatPassword": "Repeat new password",
       "saveButton": "Save changes"
     }
+  },
+  "menu":{
+    "item":{
+      "contact": "Contact"
+    }
   }
 }
