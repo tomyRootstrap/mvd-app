@@ -75,10 +75,12 @@
   },
   "contact":{
     "form":{
+      "title":"Don’t be shy, drop us a line!",
       "label":{
         "email": "Email",
         "message": "Message"
-      }
+      },
+      "button": "Send"
     }
   }
 }

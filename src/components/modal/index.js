@@ -18,14 +18,7 @@ const Modal = props => {
 
   return (
     <div ref={modalRef} className={`modal ${props.show ? 'active' : ''}`}>
-      <div className="modal__content">
-        {!props.hideCloseButton && (
-          <button onClick={() => props.setShow(false)} className="modal__close">
-            &times;
-          </button>
-        )}
-        {props.children}
-      </div>
+      <div className="modal__content">{props.children}</div>
     </div>
   );
 };

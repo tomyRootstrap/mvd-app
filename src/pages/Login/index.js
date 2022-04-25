@@ -66,20 +66,19 @@ const Login = () => {
       <div className="form column left-column">
         <Menu switchTab={switchTab} />
         <Modal show={showModal} setShow={setShowModal}>
-          <ModalHeader>
-            <h2>Modal header</h2>
-          </ModalHeader>
           <ModalBody>
-            <form>
+            <div className="circles"> </div>
+            <h3 className="contact-title">{t('contact.form.title')}</h3>
+            <div className="contact-form">
               <label htmlFor="contactEmail">{t('contact.form.label.email')}</label>
-              <Input type="email" name="contactEmail" register={register} />
+              <input type="email" name="contactEmail" className="contact-input" />
               <label htmlFor="contactEmail">{t('contact.form.label.message')}</label>
-              <textarea></textarea>
-            </form>
+              <textarea className="contact-text-area"></textarea>
+              <div className="contact-button">
+                <Button handleClick={() => setShowModal(false)}>{t('contact.form.button')}</Button>
+              </div>
+            </div>
           </ModalBody>
-          <ModalFooter>
-            <Button handleClick={() => setShowModal(false)}> Close </Button>
-          </ModalFooter>
         </Modal>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="circles"> </div>
