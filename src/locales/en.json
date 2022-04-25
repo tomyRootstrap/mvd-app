@@ -72,5 +72,13 @@
     "item":{
       "contact": "Contact"
     }
+  },
+  "contact":{
+    "form":{
+      "label":{
+        "email": "Email",
+        "message": "Message"
+      }
+    }
   }
 }

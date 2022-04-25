@@ -13,17 +13,21 @@ import useTranslation from 'hooks/useTranslation';
 import routesPaths from 'routes/routesPaths';
 import Input from 'components/form/Input';
 import Button from 'components/common/Button';
-
 import '../../styles/form.css';
 import './style.css';
 import Menu from 'components/menu';
-import { Modal } from 'react-bootstrap';
+import Modal from 'components/modal';
+import { ModalHeader } from 'components/modal';
+import { ModalBody } from 'components/modal';
+import { ModalFooter } from 'components/modal';
+
 const Login = () => {
   const t = useTranslation();
   const dispatch = useDispatch();
   const { push } = useHistory();
   const [login, { isLoading, isSuccess, error }] = useLoginMutation();
   const { authenticated, user } = useAuth();
+  const [showModal, setShowModal] = useState(false);
 
   const schema = z.object({
     email: z.string().email({ message: t('login.errors.emailMsg') }),
@@ -49,14 +53,34 @@ const Login = () => {
   }, [isSuccess, user, push]);
 
   useEffect(() => resetErrors, [resetErrors]);
-
+  const switchTab = dataFromChild => {
+    if (dataFromChild === 'CONTACT') {
+      setShowModal(true);
+    }
+  };
   if (authenticated) {
     return <Redirect to={routesPaths.index} />;
   }
-
   return (
     <div className="row">
       <div className="form column left-column">
+        <Menu switchTab={switchTab} />
+        <Modal show={showModal} setShow={setShowModal}>
+          <ModalHeader>
+            <h2>Modal header</h2>
+          </ModalHeader>
+          <ModalBody>
+            <form>
+              <label htmlFor="contactEmail">{t('contact.form.label.email')}</label>
+              <Input type="email" name="contactEmail" register={register} />
+              <label htmlFor="contactEmail">{t('contact.form.label.message')}</label>
+              <textarea></textarea>
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <Button handleClick={() => setShowModal(false)}> Close </Button>
+          </ModalFooter>
+        </Modal>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="circles"> </div>
           <h1 className="title">{t('login.title')}</h1>

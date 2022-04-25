@@ -50,7 +50,7 @@ export const Menu = ({ switchTab }) => {
       ) : (
         <ul className={`menu__box ${isOpen ? 'open' : 'close'}`}>
           <li>
-            <button className="menu__item" onClick={() => changeTab('EDIT_PROFILE')}>
+            <button className="menu__item" onClick={() => changeTab('CONTACT')}>
               {t('menu.item.contact')}
             </button>
           </li>
