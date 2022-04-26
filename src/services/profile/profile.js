@@ -10,10 +10,17 @@ const profileApi = api.injectEndpoints({
         method: 'PUT',
       }),
     }),
+    resetPassword: builder.mutation({
+      query: body => ({
+        url: endpoints.PROFILE_PASSWORD,
+        body: body,
+        method: 'POST',
+      }),
+    }),
   }),
   overrideExisting: true,
 });
 
-export const { useProfilePasswordMutation } = profileApi;
+export const { useProfilePasswordMutation, useResetPasswordMutation } = profileApi;
 
 export const selectProfile = state => state.profile;

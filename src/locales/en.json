@@ -53,13 +53,18 @@
   },
   "target": {
     "create": {
-      "alert": {        
+      "alert": {
         "limit": "Creation target limit exceeded (max 10)."
       }
     }
   },
-  "profile":{
-    "edit":{
+  "forgotPassword": {
+    "email": "Email",
+    "button": "Recover",
+    "message": "Check your email. You will receive instructions on how to change your password."
+  },
+  "profile": {
+    "edit": {
       "title": "EDIT PROFILE",
       "email": "Email",
       "currentPassword": "Current password",
@@ -68,23 +73,28 @@
       "saveButton": "Save changes"
     }
   },
-  "menu":{
-    "item":{
+  "menu": {
+    "item": {
       "contact": "Contact"
     }
   },
-  "contact":{
-    "form":{
-      "title":"Don’t be shy, drop us a line!",
-      "label":{
+  "contact": {
+    "form": {
+      "title": "Don’t be shy, drop us a line!",
+      "label": {
         "email": "Email",
         "message": "Message"
       },
       "button": "Send"
     },
-    "response":{
+    "response": {
       "title": "Thanks for getting in touch!",
       "text": "We’ll get back to you as soon as we can."
+    },
+    "resetPassword": {
+      "title": "Reset password",
+      "button": "Reset",
+      "password": "Password",
+      "passwordConfirmation": "Confirm password"
     }
   }
-}

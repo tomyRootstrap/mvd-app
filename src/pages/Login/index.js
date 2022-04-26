@@ -156,15 +156,6 @@ const Login = () => {
             </div>
           </form>
         </div>
-
-        <div className="column right-column">
-          <div className="i6"></div>
-          <button id="apple-store"></button>
-          <div className="social-media">
-            <button id="facebook"></button>
-            <button id="twitter"></button>
-          </div>
-        </div>
       </div>
     </>
   );
