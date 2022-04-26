@@ -117,22 +117,35 @@ hr {
   margin: 1rem;
   width: 7.5rem;
 }
-.contact-form{
+.contact-form {
   margin: 1.5rem;
 }
-.contact-input{
+.contact-label {
+  text-align: center;
+  display: block;
+  font-size: 11px;
+  line-height: 13px;
+  letter-spacing: 1.65px;
+  font-weight: 700;
+  margin: 1rem;  
+}
+.contact-input {
   height: 37px;
-  width: 100%;
+  width: 80%;
+  margin: auto;
+  display: block;
 }
-.contact-text-area{
+.contact-text-area {
   height: 35vh;
-  width: 100%;
+  width: 80%;
   resize: none;
+  margin: auto;
+  display: block;
 }
-.contact-title{
+.contact-title {
   display: block;
   text-align: center;
 }
-.contact-button{
+.contact-button {
   text-align: center;
 }

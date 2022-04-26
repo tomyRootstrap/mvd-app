@@ -70,9 +70,13 @@ const Login = () => {
             <div className="circles"> </div>
             <h3 className="contact-title">{t('contact.form.title')}</h3>
             <div className="contact-form">
-              <label htmlFor="contactEmail">{t('contact.form.label.email')}</label>
+              <label htmlFor="contactEmail" className="contact-label">
+                {t('contact.form.label.email')}
+              </label>
               <input type="email" name="contactEmail" className="contact-input" />
-              <label htmlFor="contactEmail">{t('contact.form.label.message')}</label>
+              <label htmlFor="contactEmail" className="contact-label">
+                {t('contact.form.label.message')}
+              </label>
               <textarea className="contact-text-area"></textarea>
               <div className="contact-button">
                 <Button handleClick={() => setShowModal(false)}>{t('contact.form.button')}</Button>
