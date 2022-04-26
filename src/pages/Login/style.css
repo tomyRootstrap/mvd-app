@@ -149,3 +149,9 @@ hr {
 .contact-button {
   text-align: center;
 }
+.contact-message-container{
+  width: 50vw;
+  height: 40vh;
+  text-align: center;
+  align-content: center;
+}

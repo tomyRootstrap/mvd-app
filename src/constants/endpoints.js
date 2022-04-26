@@ -5,6 +5,7 @@ const endpoints = {
   GET_TOPICS: '/topics',
   TARGET: '/targets',
   PROFILE_PASSWORD: '/users/password',
+  CONTACT: '/questions',
 };
 
 export default endpoints;
