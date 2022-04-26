@@ -21,17 +21,16 @@ const ForgotPassword = () => {
     formState: { errors: forgotPassowrdErrors },
   } = useForm({ resolver: zodResolver(schema) });
   const [isSend, setIsSend] = useState(false);
-  const [resetPassword] = useResetPasswordMutation();
+  const [resetPassword, { isSuccess }] = useResetPasswordMutation();
   const redirectUrl = 'https://localhost:3000/login';
   const onSubmitForgotPassowrd = data => {
-    if (!isSend) {
-      resetPassword({ ...data, redirect_url: redirectUrl })
-        .then(data => {
-          setIsSend(true);
-        })
-        .catch(error => {});
-    }
+    resetPassword({ ...data, redirect_url: redirectUrl })
   };
+  useEffect(() => {
+    if (isSuccess) {
+      setIsSend(true);
+    }
+  }, [isSuccess]);
 
   return (
     <div className="row">
