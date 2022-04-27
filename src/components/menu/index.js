@@ -29,33 +29,33 @@ export const Menu = ({ switchTab }) => {
       <button className="menu__btn" htmlFor="menuToggle" onClick={handleClick}>
         <img src={icon} alt="Menu button" />
       </button>
-      {isLogedIn ? (
-        <ul className={`menu__box ${isOpen ? 'open' : 'close'}`}>
-          <li>
-            <button className="menu__item" onClick={() => changeTab('EDIT_PROFILE')}>
-              Edit profile
-            </button>
-          </li>
-          <li>
-            <button className="menu__item" onClick={() => changeTab('CREATE_TARGET')}>
-              Create target
-            </button>
-          </li>
-          <li>
-            <button className="menu__item" onClick={() => handleLogout()}>
-              Log Out
-            </button>
-          </li>
-        </ul>
-      ) : (
-        <ul className={`menu__box ${isOpen ? 'open' : 'close'}`}>
+      <ul className={`menu__box ${isOpen ? 'open' : 'close'}`}>
+        {isLogedIn ? (
+          <>
+            <li>
+              <button className="menu__item" onClick={() => changeTab('EDIT_PROFILE')}>
+                Edit profile
+              </button>
+            </li>
+            <li>
+              <button className="menu__item" onClick={() => changeTab('CREATE_TARGET')}>
+                Create target
+              </button>
+            </li>
+            <li>
+              <button className="menu__item" onClick={() => handleLogout()}>
+                Log Out
+              </button>
+            </li>
+          </>
+        ) : (
           <li>
             <button className="menu__item" onClick={() => changeTab('CONTACT')}>
               {t('menu.item.contact')}
             </button>
           </li>
-        </ul>
-      )}
+        )}
+      </ul>
     </div>
   );
 };

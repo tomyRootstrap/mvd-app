@@ -18,7 +18,6 @@ import '../../styles/two-columns.css';
 import './style.css';
 import Menu from 'components/menu';
 import Modal from 'components/modal';
-import { ModalBody } from 'components/modal';
 import { useContactMutation } from 'services/contact/contact';
 
 const Login = () => {
@@ -84,36 +83,34 @@ const Login = () => {
   return (
     <>
       <Modal show={showModal} setShow={setShowModal}>
-        <ModalBody>
-          <div className="circles"> </div>
-          {!isContactSended ? (
-            <form onSubmit={handleSubmitContact(onSubmitContact)}>
-              <h3 className="contact-title">{t('contact.form.title')}</h3>
-              <div className="contact-form">
-                <label htmlFor="contactEmail" className="contact-label">
-                  {t('contact.form.label.email')}
-                </label>
-                <Input type="email" name="email" register={registerContact} />
-                <label htmlFor="contactEmail" className="contact-label">
-                  {t('contact.form.label.message')}
-                </label>
-                <textarea
-                  className="contact-text-area"
-                  name="body"
-                  {...registerContact('body')}
-                ></textarea>
-                <div className="contact-button">
-                  <Button type="submit">{t('contact.form.button')}</Button>
-                </div>
+        <div className="circles"> </div>
+        {!isContactSended ? (
+          <form onSubmit={handleSubmitContact(onSubmitContact)}>
+            <h3 className="contact-title">{t('contact.form.title')}</h3>
+            <div className="contact-form">
+              <label htmlFor="contactEmail" className="contact-label">
+                {t('contact.form.label.email')}
+              </label>
+              <Input type="email" name="email" register={registerContact} />
+              <label htmlFor="contactEmail" className="contact-label">
+                {t('contact.form.label.message')}
+              </label>
+              <textarea
+                className="contact-text-area"
+                name="body"
+                {...registerContact('body')}
+              ></textarea>
+              <div className="contact-button">
+                <Button type="submit">{t('contact.form.button')}</Button>
               </div>
-            </form>
-          ) : (
-            <div className="contact-message-container">
-              <h3>{t('contact.response.title')}</h3>
-              <p>{t('contact.response.text')}</p>
             </div>
-          )}
-        </ModalBody>
+          </form>
+        ) : (
+          <div className="contact-message-container">
+            <h3>{t('contact.response.title')}</h3>
+            <p>{t('contact.response.text')}</p>
+          </div>
+        )}
       </Modal>
       <div className="row">
         <div className="form column left-column">
