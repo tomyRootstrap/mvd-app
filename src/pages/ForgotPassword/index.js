@@ -8,6 +8,7 @@ import { z } from 'zod';
 import useTranslation from 'hooks/useTranslation';
 
 import './style.css';
+import '../../styles/two-columns.css';
 import { useResetPasswordMutation } from 'services/profile/profile';
 
 const ForgotPassword = () => {

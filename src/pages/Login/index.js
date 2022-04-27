@@ -14,6 +14,7 @@ import routesPaths from 'routes/routesPaths';
 import Input from 'components/form/Input';
 import Button from 'components/common/Button';
 import '../../styles/form.css';
+import '../../styles/two-columns.css';
 import './style.css';
 import Menu from 'components/menu';
 import Modal from 'components/modal';
@@ -158,6 +159,14 @@ const Login = () => {
               </Link>
             </div>
           </form>
+        </div>
+        <div className="column right-column">
+          <div className="i6"></div>
+          <button id="apple-store"></button>
+          <div className="social-media">
+            <button id="facebook"></button>
+            <button id="twitter"></button>
+          </div>
         </div>
       </div>
     </>

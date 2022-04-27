@@ -15,7 +15,7 @@ import { api } from 'services/api';
 import { useSignupMutation } from 'services/auth/auth';
 import { PASSWORD_REGEX } from 'constants/constants';
 import emailjs from 'emailjs-com';
-
+import '../../styles/two-columns.css';
 import './style.css';
 
 const Signup = () => {
