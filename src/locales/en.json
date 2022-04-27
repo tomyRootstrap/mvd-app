@@ -73,7 +73,26 @@
       "saveButton": "Save changes"
     }
   },
-  "resetPassword":{
+  "menu": {
+    "item": {
+      "contact": "Contact"
+    }
+  },
+  "contact": {
+    "form": {
+      "title": "Don’t be shy, drop us a line!",
+      "label": {
+        "email": "Email",
+        "message": "Message"
+      },
+      "button": "Send"
+    },
+    "response": {
+      "title": "Thanks for getting in touch!",
+      "text": "We’ll get back to you as soon as we can."
+    }   
+  },
+  "resetPassword": {
     "title": "Reset password",
     "button": "Reset",
     "password": "Password",
