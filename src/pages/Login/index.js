@@ -17,9 +17,7 @@ import '../../styles/form.css';
 import './style.css';
 import Menu from 'components/menu';
 import Modal from 'components/modal';
-import { ModalHeader } from 'components/modal';
 import { ModalBody } from 'components/modal';
-import { ModalFooter } from 'components/modal';
 import { useContactMutation } from 'services/contact/contact';
 
 const Login = () => {
@@ -27,7 +25,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const { push } = useHistory();
   const [login, { isLoading, isSuccess, error }] = useLoginMutation();
-  const [contact] = useContactMutation();
+  const [contact, { isSuccess: isContactSuccess }] = useContactMutation();
   const [isContactSended, setIsContactSended] = useState(false);
   const { authenticated, user } = useAuth();
   const [showModal, setShowModal] = useState(false);
@@ -69,14 +67,19 @@ const Login = () => {
       setShowModal(true);
     }
   };
+  const onSubmitContact = data => {
+    contact(data);
+  };
+  useEffect(() => {
+    debugger;
+    if (isContactSuccess) {
+      setIsContactSended(true);
+    }
+  }, [isContactSuccess]);
+
   if (authenticated) {
     return <Redirect to={routesPaths.index} />;
   }
-  const onSubmitContact = data => {
-    contact(data).then(data => {
-      setIsContactSended(true);
-    });
-  };
   return (
     <>
       <Modal show={showModal} setShow={setShowModal}>

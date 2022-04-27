@@ -54,7 +54,7 @@
   display: block;
   height: 38px;
   width: 120px;
-  background-color: #ffffff00;
+  background-color: var(--color-black);
   border: none;
 }
 
@@ -63,7 +63,7 @@
   background-repeat: no-repeat;
   height: 27px;
   width: 26px;
-  background-color: #ffffff00;
+  background-color: var(--color-black);
   border: none;
   float: left;
 }
@@ -72,7 +72,7 @@
   background-repeat: no-repeat;
   height: 27px;
   width: 26px;
-  background-color: #ffffff00;
+  background-color: var(--color-black);
   border: none;
   float: right;
 }

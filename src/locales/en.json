@@ -90,11 +90,12 @@
     "response": {
       "title": "Thanks for getting in touch!",
       "text": "We’ll get back to you as soon as we can."
-    },
-    "resetPassword": {
-      "title": "Reset password",
-      "button": "Reset",
-      "password": "Password",
-      "passwordConfirmation": "Confirm password"
-    }
+    }   
+  },
+  "resetPassword": {
+    "title": "Reset password",
+    "button": "Reset",
+    "password": "Password",
+    "passwordConfirmation": "Confirm password"
   }
+}

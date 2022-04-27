@@ -24,7 +24,7 @@ const ForgotPassword = () => {
   const [resetPassword, { isSuccess }] = useResetPasswordMutation();
   const redirectUrl = 'https://localhost:3000/login';
   const onSubmitForgotPassowrd = data => {
-    resetPassword({ ...data, redirect_url: redirectUrl })
+    resetPassword({ ...data, redirect_url: redirectUrl });
   };
   useEffect(() => {
     if (isSuccess) {

@@ -125,7 +125,6 @@ const Home = () => {
     setTabSelected(dataFromChild);
   };
   const onSubmitEditProfile = data => {
-    debugger;
     editProfile(data);
   };
   return (
