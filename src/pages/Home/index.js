@@ -142,6 +142,7 @@ const Home = () => {
   const onSubmitEditProfile = data => {
     editProfile(data);
   };
+
   return (
     <div className="home">
       <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targetsList} />
@@ -154,13 +155,15 @@ const Home = () => {
                   <h2>{t('home.title')}</h2>
                   <img alt="profile avatar" src={avatar}></img>
                   <h5>{user.username}</h5>
-                  <hr></hr>
+                  <hr className="margin-auto"></hr>
                   <h3>{t('home.chat.title')}</h3>
                   {matchList.map((match, i) => {
                     return (
                       <>
-                        <hr></hr>
-                        <button key={i}>{match.user.full_name}</button>
+                        <hr className="line margin-auto"></hr>
+                        <button className="chat_button" key={i}>
+                          {match.user.full_name}
+                        </button>
                         {match.unread_messages}
                       </>
                     );

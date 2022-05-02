@@ -26,3 +26,13 @@
     transform: rotate(360deg);
   }
 }
+.line{
+  width: 95%;
+}
+.margin-auto {
+  margin: auto;
+}
+.chat_button{
+  background-color: transparent;
+  border: none;
+}
