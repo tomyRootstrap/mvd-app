@@ -142,7 +142,9 @@ const Home = () => {
   const onSubmitEditProfile = data => {
     editProfile(data);
   };
-
+  const handleClickOpenChat = () => {
+    setTabSelected('CHAT');
+  };
   return (
     <div className="home">
       <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targetsList} />
@@ -161,7 +163,7 @@ const Home = () => {
                     return (
                       <>
                         <hr className="line margin-auto"></hr>
-                        <button className="chat_button" key={i}>
+                        <button className="chat_button" key={i} onClick={handleClickOpenChat}>
                           {match.user.full_name}
                         </button>
                         {match.unread_messages}
