@@ -166,7 +166,23 @@ const Home = () => {
                         <button className="chat_button" key={i} onClick={handleClickOpenChat}>
                           {match.user.full_name}
                         </button>
-                        {match.unread_messages}
+                        <div
+                          className={
+                            match.unread_messages === 0
+                              ? 'notifications_empty_container'
+                              : 'have_notifications_container'
+                          }
+                        >
+                          <lable
+                            className={
+                              match.unread_messages === 0
+                                ? 'notifications_empty'
+                                : 'have_notifications'
+                            }
+                          >
+                            {match.unread_messages}
+                          </lable>
+                        </div>
                       </>
                     );
                   })}

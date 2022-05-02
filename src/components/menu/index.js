@@ -33,6 +33,11 @@ export const Menu = ({ switchTab }) => {
         {isLogedIn ? (
           <>
             <li>
+              <button className="menu__item" onClick={() => changeTab('HOME')}>
+                Home
+              </button>
+            </li>
+            <li>
               <button className="menu__item" onClick={() => changeTab('EDIT_PROFILE')}>
                 Edit profile
               </button>
