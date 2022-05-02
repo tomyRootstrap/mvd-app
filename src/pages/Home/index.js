@@ -15,11 +15,14 @@ import { useEffect, useState } from 'react';
 import { useTopicsQuery } from 'services/topic/topic';
 import SideBar from 'components/sideBar';
 import sideBarIcon from '../../assets/aim.png';
+import avatar from '../../assets/profile.png';
 import { useProfilePasswordMutation } from 'services/profile/profile';
+import { useGetConversationQuery } from 'services/conversation/conversation';
 
 const Home = () => {
   const t = useTranslation();
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
+  const user = JSON.parse(localStorage.getItem('user'));
   const [logout, { isLoading }] = useLogoutMutation();
   const [createTarget] = useCreateTargetMutation();
   const [editProfile] = useProfilePasswordMutation();
@@ -29,7 +32,9 @@ const Home = () => {
   const [targetsList, setTargetsList] = useState([]);
   const [isTargetCreationLimit, setIsTargetCreationLimit] = useState(false);
   const [latLng, setLatLng] = useState({});
-  const [tabSelected, setTabSelected] = useState('CREATE_TARGET');
+  const [tabSelected, setTabSelected] = useState('HOME');
+  const { data: matchConversations } = useGetConversationQuery();
+  const [matchList, setMatchList] = useState([]);
   const [profile, setProfile] = useState({
     currentPassword: '',
     password: '',
@@ -62,7 +67,17 @@ const Home = () => {
       where: [position.coords.latitude, position.coords.longitude],
     });
   };
+  const getMatches = () => {
+    let matchParsedList = [];
+    matchConversations?.matches.map(match => {
+      matchParsedList.push(match);
+    });
+    setMatchList(matchParsedList);
+  };
 
+  useEffect(() => {
+    getMatches();
+  }, [matchConversations]);
   useEffect(() => {
     return geolocationEnabled();
   }, []);
@@ -133,6 +148,25 @@ const Home = () => {
       <SideBar title={'sideBar.create.title'} switchTab={switchTab}>
         {(() => {
           switch (tabSelected) {
+            case 'HOME':
+              return (
+                <>
+                  <h2>{t('home.title')}</h2>
+                  <img alt="profile avatar" src={avatar}></img>
+                  <h5>{user.username}</h5>
+                  <hr></hr>
+                  <h3>{t('home.chat.title')}</h3>
+                  {matchList.map((match, i) => {
+                    return (
+                      <>
+                        <hr></hr>
+                        <button key={i}>{match.user.full_name}</button>
+                        {match.unread_messages}
+                      </>
+                    );
+                  })}
+                </>
+              );
             case 'CREATE_TARGET':
               return (
                 <>
