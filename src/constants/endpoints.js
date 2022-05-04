@@ -6,6 +6,7 @@ const endpoints = {
   TARGET: '/targets',
   PROFILE_PASSWORD: '/users/password',
   CONTACT: '/questions',
+  CONVERSATION: '/match_conversations',
 };
 
 export default endpoints;

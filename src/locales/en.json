@@ -11,6 +11,10 @@
       "title": "Target title",
       "topic": "Select a topic",
       "saveTarget": "Save target"
+    },
+    "title": "TARGET",
+    "chat":{
+      "title": "Chat"
     }
   },
   "signup": {

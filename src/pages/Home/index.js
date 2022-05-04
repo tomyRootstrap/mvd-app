@@ -15,11 +15,14 @@ import { useEffect, useState } from 'react';
 import { useTopicsQuery } from 'services/topic/topic';
 import SideBar from 'components/sideBar';
 import sideBarIcon from '../../assets/aim.png';
+import avatar from '../../assets/profile.png';
 import { useProfilePasswordMutation } from 'services/profile/profile';
+import { useGetConversationQuery } from 'services/conversation/conversation';
 
 const Home = () => {
   const t = useTranslation();
   const handleLogout = () => logout().then(() => localStorage.removeItem('user'));
+  const user = JSON.parse(localStorage.getItem('user'));
   const [logout, { isLoading }] = useLogoutMutation();
   const [createTarget] = useCreateTargetMutation();
   const [editProfile] = useProfilePasswordMutation();
@@ -29,7 +32,9 @@ const Home = () => {
   const [targetsList, setTargetsList] = useState([]);
   const [isTargetCreationLimit, setIsTargetCreationLimit] = useState(false);
   const [latLng, setLatLng] = useState({});
-  const [tabSelected, setTabSelected] = useState('CREATE_TARGET');
+  const [tabSelected, setTabSelected] = useState('HOME');
+  const { data: matchConversations } = useGetConversationQuery();
+  const [matchList, setMatchList] = useState([]);
   const [profile, setProfile] = useState({
     currentPassword: '',
     password: '',
@@ -62,7 +67,15 @@ const Home = () => {
       where: [position.coords.latitude, position.coords.longitude],
     });
   };
+  const getMatches = () => {
+    let matchParsedList = [];
+    const matches = matchConversations?.matches || []
+    setMatchList(matches);    
+  };
 
+  useEffect(() => {
+    getMatches();
+  }, [matchConversations]);
   useEffect(() => {
     return geolocationEnabled();
   }, []);
@@ -127,12 +140,52 @@ const Home = () => {
   const onSubmitEditProfile = data => {
     editProfile(data);
   };
+  const handleClickOpenChat = () => {
+    setTabSelected('CHAT');
+  };
   return (
     <div className="home">
       <MapView currentPosition={currentPosition} sendLatLng={sendLatLng} targets={targetsList} />
       <SideBar title={'sideBar.create.title'} switchTab={switchTab}>
         {(() => {
           switch (tabSelected) {
+            case 'HOME':
+              return (
+                <>
+                  <h2>{t('home.title')}</h2>
+                  <img alt="profile avatar" src={avatar}></img>
+                  <h5>{user.username}</h5>
+                  <hr className="margin-auto"></hr>
+                  <h3>{t('home.chat.title')}</h3>
+                  {matchList.map((match, i) => {
+                    return (
+                      <>
+                        <hr className="line margin-auto"></hr>
+                        <button className="chat_button" key={i} onClick={handleClickOpenChat}>
+                          {match.user.full_name}
+                        </button>
+                        <div
+                          className={
+                            match.unread_messages === 0
+                              ? 'notifications_empty_container'
+                              : 'have_notifications_container'
+                          }
+                        >
+                          <lable
+                            className={
+                              match.unread_messages === 0
+                                ? 'notifications_empty'
+                                : 'have_notifications'
+                            }
+                          >
+                            {match.unread_messages}
+                          </lable>
+                        </div>
+                      </>
+                    );
+                  })}
+                </>
+              );
             case 'CREATE_TARGET':
               return (
                 <>
