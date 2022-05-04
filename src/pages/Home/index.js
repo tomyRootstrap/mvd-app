@@ -69,10 +69,8 @@ const Home = () => {
   };
   const getMatches = () => {
     let matchParsedList = [];
-    matchConversations?.matches.map(match => {
-      matchParsedList.push(match);
-    });
-    setMatchList(matchParsedList);
+    const matches = matchConversations?.matches || []
+    setMatchList(matches);    
   };
 
   useEffect(() => {
