@@ -29,7 +29,7 @@ const Login = () => {
   const [isContactSended, setIsContactSended] = useState(false);
   const { authenticated, user } = useAuth();
   const [showModal, setShowModal] = useState(false);
-
+  const [isAbout, setIsAbout] = useState(false);
   const schema = z.object({
     email: z.string().email({ message: t('login.errors.emailMsg') }),
     password: z.string().min(1, { message: t('login.errors.passwordMsg') }),
@@ -66,12 +66,14 @@ const Login = () => {
     if (dataFromChild === 'CONTACT') {
       setShowModal(true);
     }
+    if (dataFromChild === 'ABOUT') {
+      setIsAbout(true);
+    }
   };
   const onSubmitContact = data => {
     contact(data);
   };
   useEffect(() => {
-    debugger;
     if (isContactSuccess) {
       setIsContactSended(true);
     }
@@ -115,47 +117,55 @@ const Login = () => {
       <div className="row">
         <div className="form column left-column">
           <Menu switchTab={switchTab} />
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <div className="circles"> </div>
-            <h1 className="title">{t('login.title')}</h1>
-            <h5 className="subTitle">{t('login.subTitle')}</h5>
-            <p className="explanation">{t('login.explanation')}</p>
-            <label htmlFor="email">{t('login.labels.email')}</label>
-            <Input
-              register={register}
-              type="email"
-              name="email"
-              error={errors.email}
-              handleFocus={handleFocus}
-            />
-
-            <label htmlFor="password">{t('login.labels.password')}</label>
-            <Input
-              register={register}
-              type="password"
-              name="password"
-              error={errors.password}
-              handleFocus={handleFocus}
-            />
-
-            {error && error.data && <p className="error-message">{error.data.errors}</p>}
-
-            <div className="button-container">
-              <Button type="submit" disabled={isLoading}>
-                {t('login.button.signin')}
-              </Button>
-              <Link to={routesPaths.signup} className="forgot">
-                {t('login.forgot')}
-              </Link>
-              <Link to={routesPaths.signup} className="facebook">
-                {t('login.faceBook')}
-              </Link>
-              <hr />
-              <Link to={routesPaths.signup} className="signup">
-                {t('login.dontHaveAccountMsg')}
-              </Link>
+          {isAbout ? (
+            <div className="column">
+              <div className="circles"></div>
+              <h3 className="about-title">{t('about.title')}</h3>
+              <p className="about-text">{t('about.text')}</p>
             </div>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <div className="circles"> </div>
+              <h1 className="title">{t('login.title')}</h1>
+              <h5 className="subTitle">{t('login.subTitle')}</h5>
+              <p className="explanation">{t('login.explanation')}</p>
+              <label htmlFor="email">{t('login.labels.email')}</label>
+              <Input
+                register={register}
+                type="email"
+                name="email"
+                error={errors.email}
+                handleFocus={handleFocus}
+              />
+
+              <label htmlFor="password">{t('login.labels.password')}</label>
+              <Input
+                register={register}
+                type="password"
+                name="password"
+                error={errors.password}
+                handleFocus={handleFocus}
+              />
+
+              {error && error.data && <p className="error-message">{error.data.errors}</p>}
+
+              <div className="button-container">
+                <Button type="submit" disabled={isLoading}>
+                  {t('login.button.signin')}
+                </Button>
+                <Link to={routesPaths.signup} className="forgot">
+                  {t('login.forgot')}
+                </Link>
+                <Link to={routesPaths.signup} className="facebook">
+                  {t('login.faceBook')}
+                </Link>
+                <hr />
+                <Link to={routesPaths.signup} className="signup">
+                  {t('login.dontHaveAccountMsg')}
+                </Link>
+              </div>
+            </form>
+          )}
         </div>
         <div className="column right-column">
           <div className="i6"></div>

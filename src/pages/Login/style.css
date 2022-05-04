@@ -70,3 +70,12 @@ hr {
   text-align: center;
   align-content: center;
 }
+.about-title{
+  text-align: center;
+}
+.about-text{
+ font-weight: 400;
+font-size: 14px;
+line-height: 26px;
+text-align: justify;
+}
