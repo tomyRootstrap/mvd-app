@@ -54,11 +54,18 @@ export const Menu = ({ switchTab }) => {
             </li>
           </>
         ) : (
-          <li>
-            <button className="menu__item" onClick={() => changeTab('CONTACT')}>
-              {t('menu.item.contact')}
-            </button>
-          </li>
+          <>
+            <li>
+              <button className="menu__item" onClick={() => changeTab('CONTACT')}>
+                {t('menu.item.contact')}
+              </button>
+            </li>
+            <li>
+              <button className="menu__item" onClick={() => changeTab('ABOUT')}>
+                {t('menu.item.about')}
+              </button>
+            </li>
+          </>
         )}
       </ul>
     </div>
