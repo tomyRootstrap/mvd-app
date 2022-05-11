@@ -26,26 +26,26 @@
     transform: rotate(360deg);
   }
 }
-.line{
+.line {
   width: 95%;
 }
 .margin-auto {
   margin: auto;
 }
-.chat_button{
+.chat_button {
   background-color: transparent;
   border: none;
   margin: 0.5rem;
   display: inline-flex;
 }
-.have_notifications_container{  
+.have_notifications_container {
   display: inline-flex;
   float: right;
   margin-right: 1rem;
   background-color: var(--color-red);
   border-radius: 5rem;
 }
-.notifications_empty_container{
+.notifications_empty_container {
   width: 1.5rem;
   height: 1.5rem;
   display: inline-flex;
@@ -54,13 +54,20 @@
   background-color: transparent;
 }
 
-.have_notifications{
+.have_notifications {
   padding: 0.5rem;
   font-weight: 700;
   color: var(--color-white);
 }
 
-.notifications_empty{
+.notifications_empty {
   font-weight: 700;
   color: var(--color-black);
+}
+.chat-container {
+  height: 74vh;
+  width: 37.5vh;
+  margin: auto;
+}
+.chat-box-container {
 }

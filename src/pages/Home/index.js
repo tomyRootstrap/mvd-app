@@ -18,6 +18,9 @@ import sideBarIcon from '../../assets/aim.png';
 import avatar from '../../assets/profile.png';
 import { useProfilePasswordMutation } from 'services/profile/profile';
 import { useGetConversationQuery } from 'services/conversation/conversation';
+import { CONNECTION_PORT } from 'utils/socketConstants';
+import { ActionCableProvider, ActionCableConsumer } from 'react-actioncable-provider';
+import ActionCable from 'actioncable';
 
 const Home = () => {
   const t = useTranslation();
@@ -35,6 +38,11 @@ const Home = () => {
   const [tabSelected, setTabSelected] = useState('HOME');
   const { data: matchConversations } = useGetConversationQuery();
   const [matchList, setMatchList] = useState([]);
+  const [selectedMatch, setSelectedMatch] = useState({});
+  const [chatMessage, setChatMessage] = useState();
+  const cable = ActionCable.createConsumer(
+    `wss://target-mvd-api.herokuapp.com/api/v1/cable?access-token=${user.token}&uid=${user.uid}`
+  );
   const [profile, setProfile] = useState({
     currentPassword: '',
     password: '',
@@ -68,9 +76,8 @@ const Home = () => {
     });
   };
   const getMatches = () => {
-    let matchParsedList = [];
-    const matches = matchConversations?.matches || []
-    setMatchList(matches);    
+    const matches = matchConversations?.matches || [];
+    setMatchList(matches);
   };
 
   useEffect(() => {
@@ -112,6 +119,9 @@ const Home = () => {
     password: z.string().min(1),
     password_confirmation: z.string().min(1),
   });
+  const chatSchema = z.object({
+    chatMessage: z.string().min(1),
+  });
   const {
     register,
     handleSubmit,
@@ -123,6 +133,12 @@ const Home = () => {
     handleSubmit: handleEditProfileForm,
     formState: { editProfileErrors },
   } = useForm({ resolver: zodResolver(editProfileSchema) });
+
+  const {
+    register: chatForm,
+    handleSubmit: handleChatForm,
+    formState: { chatErrors },
+  } = useForm({ resolver: zodResolver(chatSchema) });
 
   const onSubmit = data => {
     if (targetsList.length <= 9) {
@@ -140,8 +156,21 @@ const Home = () => {
   const onSubmitEditProfile = data => {
     editProfile(data);
   };
-  const handleClickOpenChat = () => {
+  const handleClickOpenChat = data => {
+    setSelectedMatch(data);
     setTabSelected('CHAT');
+  };
+  const onSubmitChatForm = data => {
+    setChatMessage(data.chatMessage);
+    cable.subscriptions.create('send_message', { message: chatMessage });
+  };
+  const handleReceivedConversation = response => {
+    debugger;
+    const { conversation } = response;
+  };
+  const handleOnConected = () => {
+    debugger;
+    console.log('conectado');
   };
   return (
     <div className="home">
@@ -161,7 +190,11 @@ const Home = () => {
                     return (
                       <>
                         <hr className="line margin-auto"></hr>
-                        <button className="chat_button" key={i} onClick={handleClickOpenChat}>
+                        <button
+                          className="chat_button"
+                          key={i}
+                          onClick={() => handleClickOpenChat(match)}
+                        >
                           {match.user.full_name}
                         </button>
                         <div
@@ -232,6 +265,27 @@ const Home = () => {
                       <Button type="submit">{t('profile.edit.saveButton')}</Button>
                     </form>
                   </div>
+                </>
+              );
+            case 'CHAT':
+              return (
+                <>
+                  <ActionCableProvider cable={cable}>
+                    <ActionCableConsumer
+                      channel={'ChatChannel'}
+                      onReceived={handleReceivedConversation}
+                      onConnected={handleOnConected}
+                    />
+                    <h5>{selectedMatch.user.full_name}</h5>
+                    <hr className="line margin-auto"></hr>
+                    <div className="chat-container"></div>
+                    <div className="chat-box-container">
+                      <form onSubmit={handleChatForm(onSubmitChatForm)}>
+                        <Input type="text" name="chatMessage" register={chatForm} />
+                        <Button type="submit">{t('chat.button')}</Button>
+                      </form>
+                    </div>
+                  </ActionCableProvider>
                 </>
               );
             default:
